@@ -1,0 +1,4 @@
+2022-07-11 13:06:31,800 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2022-07-11 13:06:31,801 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2022-07-13 15:39:11,618 - numexpr.utils - INFO - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2022-07-13 15:39:11,619 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
