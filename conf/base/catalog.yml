@@ -1,0 +1,71 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+
+test_mat_file_name:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/iris.csv
+
+CellList:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/CellList_curated.csv
+  #filepath: data/01_raw/CellList_test.csv
+
+cells_extracted_raw:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/cells_extracted_raw.csv
+  #filepath: data/02_intermediate/cells_extracted_test.csv
+
+report_02_dict:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/report_02_intermediate/report_02_dict.JSON
+
+outliers_df_02:
+  type: pandas.CSVDataSet
+  filepath: data/08_reporting/report_02_intermediate/report_02_outliers.csv
+
+outliers_df_03:
+  type: pandas.CSVDataSet
+  filepath: data/08_reporting/report_03_primary/report_03_outliers.csv
+
+cells_reformated:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/cells_reformated.csv
+  #filepath: data/02_intermediate/cells_extracted_test.csv
+
+stat_analysis_1v1:
+  type: pandas.CSVDataSet
+  filepath: data/04_statistical_analysis/stat_analysis_1v1.csv
+
+stat_synthesis_1v1:
+  type: pandas.CSVDataSet
+  filepath: data/04_statistical_analysis/stat_synthesis_1v1.csv
+
+statistical_analysis:
+  type: pandas.CSVDataSet
+  filepath: data/04_statistical_analysis/statistical_analysis.csv
+
+statistical_significance:
+  type: pandas.CSVDataSet
+  filepath: data/04_statistical_analysis/statistical_significance.csv
+
+clustering_output:
+  type: pandas.CSVDataSet
+  filepath: data/05_clustering/clustering_output.csv
+
+clustering_output_norm:
+  type: pandas.CSVDataSet
+  filepath: data/05_clustering/clustering_output_norm.csv
+
+centroids:
+  type: pandas.CSVDataSet
+  filepath: data/05_clustering/centroids.csv
+
+centroids_norm:
+  type: pandas.CSVDataSet
+  filepath: data/05_clustering/centroids_norm.csv
+
+clustering_input:
+  type: pandas.CSVDataSet
+  filepath: data/05_clustering/clustering_input.csv
