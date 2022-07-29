@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bbp_code_package.nodes.extraction.reporting_utils &mdash; bbp_code_package 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\theme-overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> bbp_code_package
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">bbp_code_package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../bbp_code_package.html">bbp_code_package package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../bbp_code_package.nodes.html">bbp_code_package.nodes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../bbp_code_package.pipelines.html">bbp_code_package.pipelines package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#module-bbp_code_package.pipeline_registry">bbp_code_package.pipeline_registry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#module-bbp_code_package.settings">bbp_code_package.settings module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">bbp_code_package</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>bbp_code_package.nodes.extraction.reporting_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bbp_code_package.nodes.extraction.reporting_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">PyPDF2</span> <span class="kn">import</span> <span class="n">PdfFileMerger</span>
+
+
+<div class="viewcode-block" id="get_report_02_intermediate"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_report_02_intermediate">[docs]</a><span class="k">def</span> <span class="nf">get_report_02_intermediate</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="n">report_parameters</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reports&quot;</span><span class="p">][</span><span class="s2">&quot;report_02_intermediate&quot;</span><span class="p">]</span>
+    <span class="n">outliers_df</span> <span class="o">=</span> <span class="n">get_numerical_data_report</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">report_parameters</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">outliers_df</span></div>
+
+
+<div class="viewcode-block" id="get_report_03_primary"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_report_03_primary">[docs]</a><span class="k">def</span> <span class="nf">get_report_03_primary</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="c1"># report_parameters = parameters[&quot;reports&quot;][&quot;report_03_primary&quot;]</span>
+    <span class="c1"># outliers_df = get_numerical_data_report(df, report_parameters)</span>
+
+    <span class="n">get_raw_data_anaysis</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">outliers_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">outliers_df</span></div>
+
+
+<div class="viewcode-block" id="get_raw_data_anaysis"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_raw_data_anaysis">[docs]</a><span class="k">def</span> <span class="nf">get_raw_data_anaysis</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+
+    <span class="c1"># same stimulation</span>
+    <span class="n">stim_groups_dict</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">][</span><span class="s2">&quot;stim_groups_dict&quot;</span><span class="p">]</span>
+    <span class="n">group_col_name_type</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">][</span><span class="s2">&quot;group_col_name_type&quot;</span><span class="p">]</span>
+    <span class="n">group_col_name_in_pc</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">][</span><span class="s2">&quot;group_col_name_in_pc&quot;</span><span class="p">]</span>
+
+    <span class="n">savefile_type</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">][</span><span class="s2">&quot;savefile_type&quot;</span><span class="p">]</span>
+    <span class="n">savefile_in_pc</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">][</span><span class="s2">&quot;savefile_in_pc&quot;</span><span class="p">]</span>
+    <span class="n">savepath</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">][</span><span class="s2">&quot;savepath&quot;</span><span class="p">]</span>
+
+    <span class="n">get_html_scattermatrix_from_dict</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">,</span> <span class="n">stim_groups_dict</span><span class="p">,</span> <span class="n">group_col_name_type</span><span class="p">,</span> <span class="n">savepath</span><span class="p">,</span> <span class="n">savefile_type</span>
+    <span class="p">)</span>
+    <span class="n">get_html_scattermatrix_from_dict</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">,</span> <span class="n">stim_groups_dict</span><span class="p">,</span> <span class="n">group_col_name_in_pc</span><span class="p">,</span> <span class="n">savepath</span><span class="p">,</span> <span class="n">savefile_in_pc</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_html_scattermatrix_from_dict"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_html_scattermatrix_from_dict">[docs]</a><span class="k">def</span> <span class="nf">get_html_scattermatrix_from_dict</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">groups_dict</span><span class="p">,</span> <span class="n">colour_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">savepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">savefile</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot scattermatrix HTML file over defined dict</span>
+<span class="sd">    :param df:</span>
+<span class="sd">    :param groups_dict:</span>
+<span class="sd">    :param colour_col:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">protocol</span> <span class="ow">in</span> <span class="n">groups_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">stim_numbers</span> <span class="o">=</span> <span class="n">groups_dict</span><span class="p">[</span><span class="n">protocol</span><span class="p">]</span>
+        <span class="n">protocol_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="p">(</span><span class="n">protocol</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">stim_numbers</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">savefile</span><span class="si">}</span><span class="s2">\</span><span class="si">{</span><span class="n">savefile</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">protocol</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">.html&quot;</span>
+
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">protocol_cols</span> <span class="k">if</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)]</span>
+            <span class="n">plotly</span><span class="o">.</span><span class="n">offline</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                <span class="n">px</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colour_col</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">filename</span><span class="p">),</span>
+                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">savepath</span><span class="si">}</span><span class="s2">\</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">auto_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;scrollZoom&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_numerical_columns"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_numerical_columns">[docs]</a><span class="k">def</span> <span class="nf">get_numerical_columns</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    returns numerical columns of a dataframe</span>
+<span class="sd">    :param df: dataframe to analyse</span>
+<span class="sd">    :return: list of numerical columns</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;int16&quot;</span><span class="p">,</span> <span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="s2">&quot;int64&quot;</span><span class="p">,</span> <span class="s2">&quot;float16&quot;</span><span class="p">,</span> <span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="s2">&quot;float64&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">numerics</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="merge_pdfs"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.merge_pdfs">[docs]</a><span class="k">def</span> <span class="nf">merge_pdfs</span><span class="p">(</span><span class="n">file_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">writing_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge the listed pdfs in one unique file</span>
+<span class="sd">    :param file_list: list of file paths</span>
+<span class="sd">    :return: One unique pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">merger</span> <span class="o">=</span> <span class="n">PdfFileMerger</span><span class="p">()</span>
+
+    <span class="c1"># Iterate over the list of the file paths</span>
+    <span class="k">for</span> <span class="n">pdf_file</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+        <span class="c1"># Append PDF files</span>
+        <span class="n">merger</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pdf_file</span><span class="p">)</span>
+
+    <span class="c1"># Write out the merged PDF file</span>
+    <span class="n">merger</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">writing_path</span><span class="p">)</span>
+    <span class="n">merger</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_numerical_data_report"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_numerical_data_report">[docs]</a><span class="k">def</span> <span class="nf">get_numerical_data_report</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">report_parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+
+    <span class="n">numerical_columns_list</span> <span class="o">=</span> <span class="n">get_numerical_columns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">file_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">file_writing_path</span> <span class="o">=</span> <span class="n">report_parameters</span><span class="p">[</span><span class="s2">&quot;file_writing_path&quot;</span><span class="p">]</span>
+    <span class="n">report_writing_path</span> <span class="o">=</span> <span class="n">report_parameters</span><span class="p">[</span><span class="s2">&quot;report_writing_path&quot;</span><span class="p">]</span>
+    <span class="n">report_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">outliers_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numerical_columns_list</span><span class="p">:</span>
+        <span class="n">median</span><span class="p">,</span> <span class="n">treshold_max</span><span class="p">,</span> <span class="n">treshold_min</span><span class="p">,</span> <span class="n">out_of_tresh_ids</span> <span class="o">=</span> <span class="n">get_features_statistics</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">report_parameters</span>
+        <span class="p">)</span>
+
+        <span class="n">report_dict</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_of_tresh_ids</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_writing_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;figure_</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">.pdf&quot;</span><span class="p">)</span>
+        <span class="n">file_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="n">get_feature_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">median</span><span class="p">,</span> <span class="n">treshold_min</span><span class="p">,</span> <span class="n">treshold_max</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">outliers_df_temp</span> <span class="o">=</span> <span class="n">get_outliers_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">median</span><span class="p">,</span> <span class="n">treshold_min</span><span class="p">,</span> <span class="n">treshold_max</span><span class="p">)</span>
+
+        <span class="n">outliers_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">outliers_df</span><span class="p">,</span> <span class="n">outliers_df_temp</span><span class="p">])</span>
+
+    <span class="n">merge_pdfs</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">report_writing_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">outliers_df</span></div>
+
+
+<div class="viewcode-block" id="get_features_statistics"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_features_statistics">[docs]</a><span class="k">def</span> <span class="nf">get_features_statistics</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">report_parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param df:</span>
+<span class="sd">    :param col:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">treshold_mult</span> <span class="o">=</span> <span class="n">report_parameters</span><span class="p">[</span><span class="s2">&quot;treshold_mult&quot;</span><span class="p">]</span>
+
+    <span class="n">median</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+    <span class="n">stdev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">treshold_max</span> <span class="o">=</span> <span class="n">median</span> <span class="o">+</span> <span class="n">stdev</span> <span class="o">*</span> <span class="n">treshold_mult</span>
+    <span class="n">treshold_min</span> <span class="o">=</span> <span class="n">median</span> <span class="o">-</span> <span class="n">stdev</span> <span class="o">*</span> <span class="n">treshold_mult</span>
+
+    <span class="n">out_of_tresh_ids</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">treshold_max</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">out_of_tresh_ids</span> <span class="o">+=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">treshold_min</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">median</span><span class="p">,</span> <span class="n">treshold_max</span><span class="p">,</span> <span class="n">treshold_min</span><span class="p">,</span> <span class="n">out_of_tresh_ids</span></div>
+
+
+<div class="viewcode-block" id="get_feature_plot"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_feature_plot">[docs]</a><span class="k">def</span> <span class="nf">get_feature_plot</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">median</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">treshold_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">treshold_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">median</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">treshold_max</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;treshold_max&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">treshold_min</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;treshold_min&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span></div>
+
+
+<div class="viewcode-block" id="get_outliers_df"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.reporting_utils.get_outliers_df">[docs]</a><span class="k">def</span> <span class="nf">get_outliers_df</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">median</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">treshold_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">treshold_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="n">df_outliers</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">treshold_min</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">treshold_max</span><span class="p">)][</span>
+        <span class="p">[</span><span class="n">col</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_outliers</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">col</span>
+    <span class="n">df_outliers</span><span class="p">[</span><span class="s2">&quot;median&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">median</span>
+    <span class="n">df_outliers</span><span class="p">[</span><span class="s2">&quot;treshold_min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">treshold_min</span>
+    <span class="n">df_outliers</span><span class="p">[</span><span class="s2">&quot;treshold_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">treshold_max</span>
+    <span class="n">df_outliers</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="s2">&quot;feature_value&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_outliers</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

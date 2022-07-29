@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bbp_code_package.nodes.reformatting package &mdash; bbp_code_package 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\theme-overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> bbp_code_package
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">bbp_code_package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bbp_code_package.html">bbp_code_package package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bbp_code_package.nodes.html">bbp_code_package.nodes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bbp_code_package.pipelines.html">bbp_code_package.pipelines package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#module-bbp_code_package.pipeline_registry">bbp_code_package.pipeline_registry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#module-bbp_code_package.settings">bbp_code_package.settings module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bbp_code_package</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>bbp_code_package.nodes.reformatting package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="module-bbp_code_package.nodes.reformatting">
+<span id="bbp-code-package-nodes-reformatting-package"></span><h1>bbp_code_package.nodes.reformatting package<a class="headerlink" href="#module-bbp_code_package.nodes.reformatting" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-bbp_code_package.nodes.reformatting.reform_utils">
+<span id="bbp-code-package-nodes-reformatting-reform-utils-module"></span><h2>bbp_code_package.nodes.reformatting.reform_utils module<a class="headerlink" href="#module-bbp_code_package.nodes.reformatting.reform_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.reformatting.reform_utils.get_cell_group">
+<code class="sig-prename descclassname">bbp_code_package.nodes.reformatting.reform_utils.</code><code class="sig-name descname">get_cell_group</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/reformatting/reform_utils.html#get_cell_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.reformatting.reform_utils.get_cell_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map cell type to cell group
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: datafram to correct
+:param group_mapping_params: Mapping dict
+:return: Df with new column of cell grou</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.reformatting.reform_utils.remove_features_w_no_peaks">
+<code class="sig-prename descclassname">bbp_code_package.nodes.reformatting.reform_utils.</code><code class="sig-name descname">remove_features_w_no_peaks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">features_w_no_peaks</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/reformatting/reform_utils.html#remove_features_w_no_peaks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.reformatting.reform_utils.remove_features_w_no_peaks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove peak features at stimulations with limited peaks
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: datafram to correct
+:type features_w_no_peaks: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>
+:param features_w_no_peaks: list of features to be removed
+:return: df</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.reformatting.reform_utils.remove_rows_w_missing_protocols">
+<code class="sig-prename descclassname">bbp_code_package.nodes.reformatting.reform_utils.</code><code class="sig-name descname">remove_rows_w_missing_protocols</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/reformatting/reform_utils.html#remove_rows_w_missing_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.reformatting.reform_utils.remove_rows_w_missing_protocols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove row (or cells) where one protocol is missing
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df:datafram to correct</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.reformatting.reform_utils.tau_cap">
+<code class="sig-prename descclassname">bbp_code_package.nodes.reformatting.reform_utils.</code><code class="sig-name descname">tau_cap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">treshold</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/reformatting/reform_utils.html#tau_cap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.reformatting.reform_utils.tau_cap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit the value of the tau columns to a specific treschold
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: Data to reformat
+:type treshold: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>
+:param treshold: Max value of Tau column
+:return: Reformated DataFrame</p>
+</dd></dl>
+
+</section>
+<section id="module-bbp_code_package.nodes.reformatting.reformatting_main">
+<span id="bbp-code-package-nodes-reformatting-reformatting-main-module"></span><h2>bbp_code_package.nodes.reformatting.reformatting_main module<a class="headerlink" href="#module-bbp_code_package.nodes.reformatting.reformatting_main" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.reformatting.reformatting_main.reformat_dataframe">
+<code class="sig-prename descclassname">bbp_code_package.nodes.reformatting.reformatting_main.</code><code class="sig-name descname">reformat_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/reformatting/reformatting_main.html#reformat_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.reformatting.reformatting_main.reformat_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orchestratoe running the reformating functions
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: Data to be reformatted
+:type parameters: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param parameters: Code parameters
+:return: Formatted dataframe</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bbp_code_package.nodes.extraction package &mdash; bbp_code_package 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\theme-overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> bbp_code_package
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">bbp_code_package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bbp_code_package.html">bbp_code_package package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bbp_code_package.nodes.html">bbp_code_package.nodes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bbp_code_package.pipelines.html">bbp_code_package.pipelines package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#module-bbp_code_package.pipeline_registry">bbp_code_package.pipeline_registry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#module-bbp_code_package.settings">bbp_code_package.settings module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bbp_code_package</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>bbp_code_package.nodes.extraction package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="module-bbp_code_package.nodes.extraction">
+<span id="bbp-code-package-nodes-extraction-package"></span><h1>bbp_code_package.nodes.extraction package<a class="headerlink" href="#module-bbp_code_package.nodes.extraction" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-bbp_code_package.nodes.extraction.cell_data_load_process">
+<span id="bbp-code-package-nodes-extraction-cell-data-load-process-module"></span><h2>bbp_code_package.nodes.extraction.cell_data_load_process module<a class="headerlink" href="#module-bbp_code_package.nodes.extraction.cell_data_load_process" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.cell_data_load_process.collect_cells_to_load">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.cell_data_load_process.</code><code class="sig-name descname">collect_cells_to_load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/cell_data_load_process.html#collect_cells_to_load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.cell_data_load_process.collect_cells_to_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>extract the list of cells to be loaded from the dedicated file
+:type data: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param data: data table with cell ID and quality flag
+:type parameters: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param parameters:
+:return: list of cells to load</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.cell_data_load_process.get_mat_name">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.cell_data_load_process.</code><code class="sig-name descname">get_mat_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cell_list</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/cell_data_load_process.html#get_mat_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.cell_data_load_process.get_mat_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build name of .mat file to load from cell ID
+:type cell_list: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>
+:param cell_list: List of cells to consider
+:return: updated list containing the file names instead of the cell ID</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.cell_data_load_process.load_preprocess_mat_file">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.cell_data_load_process.</code><code class="sig-name descname">load_preprocess_mat_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cell_source_csv</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/cell_data_load_process.html#load_preprocess_mat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.cell_data_load_process.load_preprocess_mat_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops over the files to load and aggregate them together</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_source_csv</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – csv file containing the list of cells to  load</p></li>
+<li><p><strong>parameters</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>nothing, dataframe is saved through the data catalog</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-bbp_code_package.nodes.extraction.data_cleaning_utils">
+<span id="bbp-code-package-nodes-extraction-data-cleaning-utils-module"></span><h2>bbp_code_package.nodes.extraction.data_cleaning_utils module<a class="headerlink" href="#module-bbp_code_package.nodes.extraction.data_cleaning_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.data_cleaning_utils.clean_data_from_cleaning_dict">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.data_cleaning_utils.</code><code class="sig-name descname">clean_data_from_cleaning_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/data_cleaning_utils.html#clean_data_from_cleaning_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.data_cleaning_utils.clean_data_from_cleaning_dict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><strong>parameters</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-bbp_code_package.nodes.extraction.mat_file_extraction">
+<span id="bbp-code-package-nodes-extraction-mat-file-extraction-module"></span><h2>bbp_code_package.nodes.extraction.mat_file_extraction module<a class="headerlink" href="#module-bbp_code_package.nodes.extraction.mat_file_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.mat_file_extraction.apwaveform_extraction">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.mat_file_extraction.</code><code class="sig-name descname">apwaveform_extraction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em>, <em class="sig-param"><span class="n">protocols_index_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/mat_file_extraction.html#apwaveform_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.mat_file_extraction.apwaveform_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orchestrates the extraction and the formatting of the apwaveform data
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: raw mat file
+:type parameters: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param parameters:
+:return: dataframe with ap_waveform features</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.mat_file_extraction.extract_preformat_mat_file">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.mat_file_extraction.</code><code class="sig-name descname">extract_preformat_mat_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/mat_file_extraction.html#extract_preformat_mat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.mat_file_extraction.extract_preformat_mat_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exteract and preformat features from the .mat file
+:type filename: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>
+:param filename: File to process
+:type parameters: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param parameters:
+:return:</p>
+<blockquote>
+<div><p>cellinfo: pandas series containing the high level cell information
+apwaveform_features: features extracted from the APWaveform protocol</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.mat_file_extraction.idrest_extraction">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.mat_file_extraction.</code><code class="sig-name descname">idrest_extraction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em>, <em class="sig-param"><span class="n">protocols_index_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/mat_file_extraction.html#idrest_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.mat_file_extraction.idrest_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orchestrates the extraction and the formatting of the idrest data
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: raw mat file
+:type parameters: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param parameters:
+:return: dataframe with ap_waveform features</p>
+</dd></dl>
+
+</section>
+<section id="module-bbp_code_package.nodes.extraction.reporting_utils">
+<span id="bbp-code-package-nodes-extraction-reporting-utils-module"></span><h2>bbp_code_package.nodes.extraction.reporting_utils module<a class="headerlink" href="#module-bbp_code_package.nodes.extraction.reporting_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_feature_plot">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_feature_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">median</span></em>, <em class="sig-param"><span class="n">treshold_min</span></em>, <em class="sig-param"><span class="n">treshold_max</span></em>, <em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_feature_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_feature_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_features_statistics">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_features_statistics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">report_parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_features_statistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_features_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><strong>col</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_html_scattermatrix_from_dict">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_html_scattermatrix_from_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">groups_dict</span></em>, <em class="sig-param"><span class="n">colour_col</span></em>, <em class="sig-param"><span class="n">savepath</span></em>, <em class="sig-param"><span class="n">savefile</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_html_scattermatrix_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_html_scattermatrix_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot scattermatrix HTML file over defined dict
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df:
+:param groups_dict:
+:type colour_col: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>
+:param colour_col:
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_numerical_columns">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_numerical_columns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_numerical_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_numerical_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns numerical columns of a dataframe
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: dataframe to analyse
+:return: list of numerical columns</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_numerical_data_report">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_numerical_data_report</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">report_parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_numerical_data_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_numerical_data_report" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_outliers_df">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_outliers_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">median</span></em>, <em class="sig-param"><span class="n">treshold_min</span></em>, <em class="sig-param"><span class="n">treshold_max</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_outliers_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_outliers_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_raw_data_anaysis">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_raw_data_anaysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_raw_data_anaysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_raw_data_anaysis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_report_02_intermediate">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_report_02_intermediate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_report_02_intermediate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_report_02_intermediate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.get_report_03_primary">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">get_report_03_primary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#get_report_03_primary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.get_report_03_primary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.reporting_utils.merge_pdfs">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.reporting_utils.</code><code class="sig-name descname">merge_pdfs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_list</span></em>, <em class="sig-param"><span class="n">writing_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/reporting_utils.html#merge_pdfs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.reporting_utils.merge_pdfs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge the listed pdfs in one unique file
+:type file_list: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>
+:param file_list: list of file paths
+:return: One unique pdf</p>
+</dd></dl>
+
+</section>
+<section id="module-bbp_code_package.nodes.extraction.utils_mat_file_extraction">
+<span id="bbp-code-package-nodes-extraction-utils-mat-file-extraction-module"></span><h2>bbp_code_package.nodes.extraction.utils_mat_file_extraction module<a class="headerlink" href="#module-bbp_code_package.nodes.extraction.utils_mat_file_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.apwaveform_features_extraction">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">apwaveform_features_extraction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#apwaveform_features_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.apwaveform_features_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract and reformat the features from the APWaveform protocol
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df:data to process
+:param parameters:
+:return:</p>
+<blockquote>
+<div><p>Dataframe with cleaned and formatted protocol data</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_ahp_columns">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">compute_ahp_columns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em>, <em class="sig-param"><span class="n">out_features</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#compute_ahp_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_ahp_columns" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – data from which frequency should be exctracted</p></li>
+<li><p><strong>parameters</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data with new column, peak frequency</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_ap_potential_columns">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">compute_ap_potential_columns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em>, <em class="sig-param"><span class="n">out_features</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#compute_ap_potential_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_ap_potential_columns" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – data from which frequency should be exctracted</p></li>
+<li><p><strong>parameters</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data with new column, peak frequency</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_isi_columns">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">compute_isi_columns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em>, <em class="sig-param"><span class="n">out_features</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#compute_isi_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_isi_columns" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – data from which frequency should be exctracted</p></li>
+<li><p><strong>parameters</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data with new column, peak frequency</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_peak_frequency">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">compute_peak_frequency</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em>, <em class="sig-param"><span class="n">out_features</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#compute_peak_frequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_peak_frequency" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – data from which frequency should be exctracted</p></li>
+<li><p><strong>parameters</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data with new column, peak frequency</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.double_extract">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">double_extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#double_extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.double_extract" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> – feature to extract</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>value with corrected feature</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.empty_array_corrector">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">empty_array_corrector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">req_size</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#empty_array_corrector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.empty_array_corrector" title="Permalink to this definition">¶</a></dt>
+<dd><p>reshape arrays to the required size
+:type x: <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>
+:param x: Array to reshape
+:type req_size: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>
+:param req_size: size of reshape
+:return: reshaped/padded array</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_cell_info">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">extract_cell_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#extract_cell_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_cell_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>extracts cellinfo from the imported .mat file
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df:
+:type parameters: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param parameters:
+:return: cleaned cellinfo data as pandas series</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_protocol_data">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">extract_protocol_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em>, <em class="sig-param"><span class="n">protocols_index_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#extract_protocol_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_protocol_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – raw data</p></li>
+<li><p><strong>parameters</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>non formatted dataframe with data aggregated at protocol level</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_at_trace_level">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">flatten_at_trace_level</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">trace_df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#flatten_at_trace_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_at_trace_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reshape elements at trace level (size must match across all features)
+and then explodes the data to get a df at trace level
+:param df: dataframe_to_flatten
+:type protocol_dict: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]
+:param protocol_dict: dict of parameters at protocol level
+:return: dataframe flattened at trace level</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_columns">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">flatten_columns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#flatten_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten the object in columns. This allow an easier use of data  later
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df: data to format
+:param parameters:
+:return: dataframe where columns value is an integer or a list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_df">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">flatten_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#flatten_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten all the columns of a datafram to facilitate data extraction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – dataframe to be flattened</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>flattened dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_min_list">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">get_min_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#get_min_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_min_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates list of given size including the input data
+:param x: input value
+:param n: size of list to be created
+:return: list of size n including the values of x</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_missing_peaks">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">get_missing_peaks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features_df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#get_missing_peaks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_missing_peaks" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features_df</strong> – </p></li>
+<li><p><strong>protocol_dict</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_protocol_dict">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">get_protocol_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">raw_file</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#get_protocol_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_protocol_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the index corresponding to each protocol and stores it in a dict
+:type raw_file: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param raw_file: raw .mat file that was just loaded
+:return: Dict with the protocol name as entry and the index as object</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.idrest_features_extraction">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">idrest_features_extraction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#idrest_features_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.idrest_features_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract and reformat the features from the idrest protocol
+:type df: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param df:data to process
+:param parameters:
+:return:</p>
+<blockquote>
+<div><p>Dataframe with cleaned and formatted protocol data</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.load_mat_file">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">load_mat_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em>, <em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#load_mat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.load_mat_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – path leading to the folder where .mat files are stored</p></li>
+<li><p><strong>filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – name of the file to load</p></li>
+</ul>
+</dd>
+</dl>
+<p>:return:loaded .mat file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.pivot_protocol_table">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">pivot_protocol_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">protocol_dict</span></em>, <em class="sig-param"><span class="n">out_features</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#pivot_protocol_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.pivot_protocol_table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – </p></li>
+<li><p><strong>parameters</strong> – </p></li>
+<li><p><strong>out_features</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.extraction.utils_mat_file_extraction.single_extract">
+<code class="sig-prename descclassname">bbp_code_package.nodes.extraction.utils_mat_file_extraction.</code><code class="sig-name descname">single_extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/extraction/utils_mat_file_extraction.html#single_extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.extraction.utils_mat_file_extraction.single_extract" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> – feature to extract</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>value with corrected feature</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
