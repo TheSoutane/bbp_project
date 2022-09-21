@@ -93,7 +93,8 @@
               
             
             
-              <ul>
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">bbp_code_package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../bbp_code_package.html">bbp_code_package package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#subpackages">Subpackages</a><ul>
@@ -183,20 +184,19 @@
 
 <div class="viewcode-block" id="reformat_dataframe"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.reformatting.html#bbp_code_package.nodes.reformatting.reformatting_main.reformat_dataframe">[docs]</a><span class="k">def</span> <span class="nf">reformat_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Orchestratoe running the reformating functions</span>
-<span class="sd">    :param df: Data to be reformatted</span>
-<span class="sd">    :param parameters: Code parameters</span>
-<span class="sd">    :return: Formatted dataframe</span>
+<span class="sd">    |  Orchestratoe running the reformating functions</span>
+<span class="sd">    |  :param df: Data to be reformatted</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  Formatted dataframe</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="n">treshold_tau</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reformatting_params&quot;</span><span class="p">][</span><span class="s2">&quot;treshold_tau&quot;</span><span class="p">]</span>
     <span class="n">features_w_no_peaks</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reformatting_params&quot;</span><span class="p">][</span><span class="s2">&quot;features_w_no_peaks&quot;</span><span class="p">]</span>
     <span class="c1"># group_mapping_params = parameters[&quot;reformatting_params&quot;][&quot;group_mapping_params&quot;]</span>
-
     <span class="n">df</span> <span class="o">=</span> <span class="n">reform_utils</span><span class="o">.</span><span class="n">tau_cap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">treshold_tau</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">reform_utils</span><span class="o">.</span><span class="n">remove_features_w_no_peaks</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">features_w_no_peaks</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">reform_utils</span><span class="o">.</span><span class="n">remove_rows_w_missing_protocols</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">reform_utils</span><span class="o">.</span><span class="n">get_cell_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span></div>
 </pre></div>

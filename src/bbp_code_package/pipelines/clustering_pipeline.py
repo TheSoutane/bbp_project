@@ -18,6 +18,7 @@ def run_clustering(**kwargs) -> Pipeline:
                 inputs=["clustering_input", "parameters"],
                 outputs=[
                     "clustering_output",
+                    "clustering_output_unsc",
                     "centroids",
                 ],
                 name="clustering_calc",

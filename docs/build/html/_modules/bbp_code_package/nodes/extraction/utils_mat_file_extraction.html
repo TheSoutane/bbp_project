@@ -93,7 +93,8 @@
               
             
             
-              <ul>
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">bbp_code_package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../bbp_code_package.html">bbp_code_package package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#subpackages">Subpackages</a><ul>
@@ -180,6 +181,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">io</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
 
 <span class="c1">####</span>
 <span class="c1"># In this script, functions extracting data from the .mat files and</span>
@@ -188,108 +190,59 @@
 <span class="c1">####</span>
 
 
-<div class="viewcode-block" id="idrest_features_extraction"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.idrest_features_extraction">[docs]</a><span class="k">def</span> <span class="nf">idrest_features_extraction</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<div class="viewcode-block" id="features_extraction"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.features_extraction">[docs]</a><span class="k">def</span> <span class="nf">features_extraction</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extract and reformat the features from the idrest protocol</span>
-<span class="sd">    :param df:data to process</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return:</span>
-<span class="sd">        Dataframe with cleaned and formatted protocol data</span>
+<span class="sd">    |  Extract and reformat the features from the APWaveform protocol</span>
+<span class="sd">    |  :param df: dataframe to be processeddata to process</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    |  Dataframe with cleaned and formatted protocol data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">preprocessing_columns</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;preprocessing_columns&quot;</span><span class="p">]</span>
+    <span class="n">preprocessing_columns</span> <span class="o">=</span> <span class="n">get_preprocessing_columns</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">)</span>
     <span class="n">repetitions_column</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;repetitions_column&quot;</span><span class="p">]</span>
-
     <span class="n">features_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">repetitions_column</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="n">out_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;out_features_base&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
     <span class="n">features_df</span> <span class="o">=</span> <span class="n">features_df</span><span class="p">[</span><span class="n">preprocessing_columns</span><span class="p">]</span>
     <span class="n">features_df</span> <span class="o">=</span> <span class="n">flatten_columns</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">)</span>
 
     <span class="n">features_df</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">compute_peak_frequency</span><span class="p">(</span>
         <span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span>
     <span class="p">)</span>
-
     <span class="n">has_missing_peaks</span> <span class="o">=</span> <span class="n">get_missing_peaks</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">has_missing_peaks</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">features_df</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">compute_ap_potential_columns</span><span class="p">(</span>
-            <span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span>
-        <span class="p">)</span>
-
-        <span class="n">features_df</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">compute_isi_columns</span><span class="p">(</span>
-            <span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span>
-        <span class="p">)</span>
-        <span class="c1"># import pdb; pdb.set_trace()</span>
-        <span class="n">features_df</span> <span class="o">=</span> <span class="n">pivot_protocol_table</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">features_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">features_df</span></div>
-
-
-<div class="viewcode-block" id="apwaveform_features_extraction"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.apwaveform_features_extraction">[docs]</a><span class="k">def</span> <span class="nf">apwaveform_features_extraction</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extract and reformat the features from the APWaveform protocol</span>
-<span class="sd">    :param df:data to process</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return:</span>
-<span class="sd">        Dataframe with cleaned and formatted protocol data</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">preprocessing_columns</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;preprocessing_columns&quot;</span><span class="p">]</span>
-    <span class="n">repetitions_column</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;repetitions_column&quot;</span><span class="p">]</span>
-
-    <span class="n">features_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">repetitions_column</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-    <span class="n">out_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;out_features_base&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-    <span class="n">features_df</span> <span class="o">=</span> <span class="n">features_df</span><span class="p">[</span><span class="n">preprocessing_columns</span><span class="p">]</span>
-    <span class="n">features_df</span> <span class="o">=</span> <span class="n">flatten_columns</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">)</span>
-
-    <span class="n">features_df</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">compute_peak_frequency</span><span class="p">(</span>
+    <span class="n">features_df</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">compute_peak_columns</span><span class="p">(</span>
         <span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span>
     <span class="p">)</span>
 
-    <span class="n">has_missing_peaks</span> <span class="o">=</span> <span class="n">get_missing_peaks</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">has_missing_peaks</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">features_df</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">compute_ap_potential_columns</span><span class="p">(</span>
-            <span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span>
-        <span class="p">)</span>
-
-        <span class="n">features_df</span><span class="p">,</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">compute_isi_columns</span><span class="p">(</span>
-            <span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span>
-        <span class="p">)</span>
-        <span class="c1"># import pdb; pdb.set_trace()</span>
-        <span class="n">features_df</span> <span class="o">=</span> <span class="n">pivot_protocol_table</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">features_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">features_df</span> <span class="o">=</span> <span class="n">pivot_protocol_table</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">out_features</span><span class="p">)</span>
+    <span class="n">features_df</span><span class="p">[</span><span class="s2">&quot;has_missing_peaks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">has_missing_peaks</span>
 
     <span class="k">return</span> <span class="n">features_df</span></div>
 
 
-<div class="viewcode-block" id="get_missing_peaks"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_missing_peaks">[docs]</a><span class="k">def</span> <span class="nf">get_missing_peaks</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="get_missing_peaks"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_missing_peaks">[docs]</a><span class="k">def</span> <span class="nf">get_missing_peaks</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param features_df:</span>
-<span class="sd">    :param protocol_dict:</span>
-<span class="sd">    :return:</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param protocol_dict: protocol parameters sub-dict</span>
+<span class="sd">    |  :return: features w peaks</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">stim_treshold</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;stim_treshold&quot;</span><span class="p">]</span>
     <span class="n">stim_col</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;stim_col&quot;</span><span class="p">]</span>
     <span class="n">spike_col</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;spike_col&quot;</span><span class="p">]</span>
 
-    <span class="n">sample_df</span> <span class="o">=</span> <span class="n">features_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features_df</span><span class="p">[</span><span class="n">stim_col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">stim_treshold</span><span class="p">]</span>
+    <span class="n">sample_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">stim_col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">stim_treshold</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">sample_df</span><span class="p">[</span><span class="n">spike_col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span></div>
 
 
 <div class="viewcode-block" id="flatten_df"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_df">[docs]</a><span class="k">def</span> <span class="nf">flatten_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Flatten all the columns of a datafram to facilitate data extraction</span>
+<span class="sd">    |  Flatten all the columns of a datafram to facilitate data extraction</span>
 
-<span class="sd">    :param df: dataframe to be flattened</span>
-<span class="sd">    :return: flattened dataframe</span>
+<span class="sd">    |  :param df: dataframe to be flattened</span>
+<span class="sd">    |  :return:  flattened dataframe</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">df_flat</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -300,29 +253,46 @@
 
 <div class="viewcode-block" id="get_min_list"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_min_list">[docs]</a><span class="k">def</span> <span class="nf">get_min_list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates list of given size including the input data</span>
-<span class="sd">    :param x: input value</span>
-<span class="sd">    :param n: size of list to be created</span>
-<span class="sd">    :return: list of size n including the values of x</span>
+<span class="sd">    |  Creates list of given size including the input data</span>
+<span class="sd">    |  :param x: input value</span>
+<span class="sd">    |  :param n: size of list to be created</span>
+<span class="sd">    |  :return:  list of size n including the values of x</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="o">|</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="o">|</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="o">|</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">x</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">x</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span></div>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="k">return</span> <span class="n">output</span></div>
 
 
 <div class="viewcode-block" id="load_mat_file"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.load_mat_file">[docs]</a><span class="k">def</span> <span class="nf">load_mat_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param filepath: path leading to the folder where .mat files are stored</span>
-<span class="sd">    :param filename: name of the file to load</span>
+<span class="sd">    |  :param filepath: path leading to the folder where .mat files are stored</span>
+<span class="sd">    |  :param filename: name of the file to load</span>
 
-<span class="sd">    :return:loaded .mat file</span>
+<span class="sd">    |  :return: loaded .mat file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="n">io</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span></div>
@@ -330,10 +300,10 @@
 
 <div class="viewcode-block" id="extract_cell_info"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_cell_info">[docs]</a><span class="k">def</span> <span class="nf">extract_cell_info</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    extracts cellinfo from the imported .mat file</span>
-<span class="sd">    :param df:</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: cleaned cellinfo data as pandas series</span>
+<span class="sd">    |  Extracts cellinfo from the imported .mat file</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  cleaned cellinfo data as pandas series</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cell_category</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cellinfo&quot;</span><span class="p">][</span><span class="s2">&quot;category&quot;</span><span class="p">]</span>
     <span class="n">cell_sub_category</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cellinfo&quot;</span><span class="p">][</span><span class="s2">&quot;sub_category&quot;</span><span class="p">]</span>
@@ -352,9 +322,9 @@
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param df: raw data</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: non formatted dataframe with data aggregated at protocol level</span>
+<span class="sd">    |  :param  df: raw data</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  non formatted dataframe with data aggregated at protocol level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cell_category</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cellinfo&quot;</span><span class="p">][</span><span class="s2">&quot;category&quot;</span><span class="p">]</span>
     <span class="n">protocol_category</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cellinfo&quot;</span><span class="p">][</span><span class="s2">&quot;protocol&quot;</span><span class="p">]</span>
@@ -362,7 +332,6 @@
     <span class="n">protocol_tag</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;protocol_tag&quot;</span><span class="p">]</span>
     <span class="n">protocol_id</span> <span class="o">=</span> <span class="n">protocols_index_dict</span><span class="p">[</span><span class="n">protocol_tag</span><span class="p">]</span>
 
-    <span class="c1"># import pdb; pdb.set_trace()</span>
     <span class="n">protocol_name</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;protocol_name&quot;</span><span class="p">]</span>
     <span class="n">protocol_raw</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cell_category</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">protocol_category</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">protocol_id</span><span class="p">]</span>
 
@@ -377,9 +346,9 @@
 
 <div class="viewcode-block" id="get_protocol_dict"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_protocol_dict">[docs]</a><span class="k">def</span> <span class="nf">get_protocol_dict</span><span class="p">(</span><span class="n">raw_file</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get the index corresponding to each protocol and stores it in a dict</span>
-<span class="sd">    :param raw_file: raw .mat file that was just loaded</span>
-<span class="sd">    :return: Dict with the protocol name as entry and the index as object</span>
+<span class="sd">    |  Get the index corresponding to each protocol and stores it in a dict</span>
+<span class="sd">    |  :param raw_file: raw .mat file that was just loaded</span>
+<span class="sd">    |  :return:  Dict with the protocol name as entry and the index as object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cell_category</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cellinfo&quot;</span><span class="p">][</span><span class="s2">&quot;category&quot;</span><span class="p">]</span>
@@ -394,19 +363,83 @@
     <span class="k">return</span> <span class="n">index_dict</span></div>
 
 
+<div class="viewcode-block" id="get_spikecount"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_spikecount">[docs]</a><span class="k">def</span> <span class="nf">get_spikecount</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    |  Count number of spikes in case the &quot;spikecount&quot; feature is missinggit</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param protocol_dict:</span>
+<span class="sd">    |  :return: df with created spikecount</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">recompute_spikecount</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;recompute_spikecount&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">recompute_spikecount</span><span class="p">:</span>
+        <span class="n">recompute_col</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;recompute_col&quot;</span><span class="p">]</span>
+        <span class="n">spike_col</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;spike_col&quot;</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">spike_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">recompute_col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_spikes</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="extract_cheops"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_cheops">[docs]</a><span class="k">def</span> <span class="nf">extract_cheops</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts the cheops protocol as it has an extra level of nesting (see experimental notebooks)</span>
+<span class="sd">    |  :param df: dataframe to be processed (can be an array)</span>
+<span class="sd">    |  :param protocol_dict:</span>
+<span class="sd">    |  :return: cheops parameters dataframe</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cheops_cols</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s1">&#39;cheops_cols&#39;</span><span class="p">]</span>
+
+    <span class="n">df_temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">cheops</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">df_temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">cheops_cols</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]))]</span>
+        <span class="n">df_out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df_temp</span><span class="p">[</span><span class="n">cheops_cols</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cheops_cols</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">df_out</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_out</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cheops_extract</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s1">&#39;pivot&#39;</span><span class="p">]:</span>
+            <span class="n">df_out</span><span class="p">[</span><span class="s1">&#39;pivot_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">df_out</span> <span class="o">=</span> <span class="n">df_out</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;pivot_index&#39;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">cheops_cols</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">df_out</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">column</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df_out</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+            <span class="n">df_out</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_out</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pivot_index&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_out</span></div>
+
+
+<div class="viewcode-block" id="cheops_extract"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.cheops_extract">[docs]</a><span class="k">def</span> <span class="nf">cheops_extract</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+<div class="viewcode-block" id="count_spikes"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.count_spikes">[docs]</a><span class="k">def</span> <span class="nf">count_spikes</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[],</span> <span class="n">out</span><span class="p">]])</span></div>
+
+
 <div class="viewcode-block" id="flatten_at_trace_level"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_at_trace_level">[docs]</a><span class="k">def</span> <span class="nf">flatten_at_trace_level</span><span class="p">(</span><span class="n">trace_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reshape elements at trace level (size must match across all features)</span>
 <span class="sd">    and then explodes the data to get a df at trace level</span>
-<span class="sd">    :param df: dataframe_to_flatten</span>
-<span class="sd">    :param protocol_dict: dict of parameters at protocol level</span>
-<span class="sd">    :return: dataframe flattened at trace level</span>
+<span class="sd">    |  :param df: dataframe to be processed dataframe_to_flatten</span>
+<span class="sd">    |  :param protocol_dict: dict of parameters at protocol level</span>
+<span class="sd">    |  :return:  dataframe flattened at trace level</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">trace_level_columns</span> <span class="o">=</span> <span class="n">get_trace_level_cols</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">)</span>
+
     <span class="n">trace_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;trace_level&quot;</span><span class="p">]</span>
 
     <span class="n">stimulation_column</span> <span class="o">=</span> <span class="n">trace_dict</span><span class="p">[</span><span class="s2">&quot;stimulation_column&quot;</span><span class="p">]</span>
     <span class="n">stimulations_to_keep</span> <span class="o">=</span> <span class="n">trace_dict</span><span class="p">[</span><span class="s2">&quot;stimulations_to_keep&quot;</span><span class="p">]</span>
-    <span class="n">trace_level_columns</span> <span class="o">=</span> <span class="n">trace_dict</span><span class="p">[</span><span class="s2">&quot;trace_level_columns&quot;</span><span class="p">]</span>
+    <span class="n">fixed_value_columns</span> <span class="o">=</span> <span class="n">trace_dict</span><span class="p">[</span><span class="s2">&quot;fixed_value_columns&quot;</span><span class="p">]</span>
 
     <span class="n">size_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">trace_level_columns</span><span class="p">:</span>
@@ -416,22 +449,38 @@
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">trace_level_columns</span><span class="p">:</span>
         <span class="n">trace_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">trace_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">empty_array_corrector</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">req_size</span><span class="p">,))</span>
 
-    <span class="c1"># import pdb; pdb.set_trace()</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">fixed_value_columns</span><span class="p">:</span>
+        <span class="n">trace_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">trace_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="n">extract_single_val_for_explode</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">req_size</span><span class="p">,)</span>
+        <span class="p">)</span>
 
+    <span class="n">trace_level_columns</span> <span class="o">=</span> <span class="n">trace_level_columns</span> <span class="o">+</span> <span class="n">fixed_value_columns</span>
     <span class="n">trace_df</span> <span class="o">=</span> <span class="n">trace_df</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="n">trace_level_columns</span><span class="p">)</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="n">trace_level_columns</span><span class="p">)</span>
-
     <span class="n">trace_df_filtered</span> <span class="o">=</span> <span class="n">trace_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
         <span class="n">trace_df</span><span class="p">[</span><span class="n">stimulation_column</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">stimulations_to_keep</span><span class="p">)</span>
     <span class="p">]</span>
+
     <span class="k">return</span> <span class="n">trace_df_filtered</span></div>
+
+
+<div class="viewcode-block" id="extract_single_val_for_explode"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_single_val_for_explode">[docs]</a><span class="k">def</span> <span class="nf">extract_single_val_for_explode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">list_dim</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[[</span><span class="n">x</span><span class="o">.</span><span class="n">item</span><span class="p">()]</span> <span class="o">*</span> <span class="n">list_dim</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]</span> <span class="o">*</span> <span class="n">list_dim</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span></div>
 
 
 <div class="viewcode-block" id="empty_array_corrector"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.empty_array_corrector">[docs]</a><span class="k">def</span> <span class="nf">empty_array_corrector</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">req_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    reshape arrays to the required size</span>
-<span class="sd">    :param x: Array to reshape</span>
-<span class="sd">    :param req_size: size of reshape</span>
-<span class="sd">    :return: reshaped/padded array</span>
+<span class="sd">    |  :param x: Array to reshape</span>
+<span class="sd">    |  :param req_size: size of reshape</span>
+<span class="sd">    |  :return:  reshaped/padded array</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">req_size</span><span class="p">))</span>
@@ -445,8 +494,8 @@
 <div class="viewcode-block" id="double_extract"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.double_extract">[docs]</a><span class="k">def</span> <span class="nf">double_extract</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param x: feature to extract</span>
-<span class="sd">    :return: value with corrected feature</span>
+<span class="sd">    |  :param x: feature to extract</span>
+<span class="sd">    |  :return:  value with corrected feature</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
 
@@ -454,8 +503,8 @@
 <div class="viewcode-block" id="single_extract"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.single_extract">[docs]</a><span class="k">def</span> <span class="nf">single_extract</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param x: feature to extract</span>
-<span class="sd">    :return: value with corrected feature</span>
+<span class="sd">    |  :param x: feature to extract</span>
+<span class="sd">    |  :return:  value with corrected feature</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
 
@@ -463,13 +512,12 @@
 <div class="viewcode-block" id="flatten_columns"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.flatten_columns">[docs]</a><span class="k">def</span> <span class="nf">flatten_columns</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flatten the object in columns. This allow an easier use of data  later</span>
-<span class="sd">    :param df: data to format</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: dataframe where columns value is an integer or a list</span>
+<span class="sd">    |  :param df: dataframe to be processed data to format</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  dataframe where columns value is an integer or a list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">double_extract_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;double_extract_features&quot;</span><span class="p">]</span>
     <span class="n">single_extract_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;single_extract_features&quot;</span><span class="p">]</span>
-    <span class="c1"># import pdb; pdb.set_trace()</span>
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">double_extract_features</span><span class="p">:</span>
         <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">double_extract</span><span class="p">)</span>
 
@@ -484,75 +532,67 @@
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param df: data from which frequency should be exctracted</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: data with new column, peak frequency</span>
+<span class="sd">    |  :param df: dataframe to be processed data from which frequency should be exctracted</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  data with new column, peak frequency</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;compute_freq&quot;</span><span class="p">]:</span>
+        <span class="n">freq_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;freq_dict&quot;</span><span class="p">]</span>
+        <span class="n">stim_lenght</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;stim_lenght&quot;</span><span class="p">]</span>
+        <span class="n">stim_start</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;stim_start&quot;</span><span class="p">]</span>
+        <span class="n">stim_end</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;stim_end&quot;</span><span class="p">]</span>
+        <span class="n">peak_frequency</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;peak_frequency&quot;</span><span class="p">]</span>
+        <span class="n">spikecount</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;spikecount&quot;</span><span class="p">]</span>
 
-    <span class="n">freq_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;freq_dict&quot;</span><span class="p">]</span>
-    <span class="n">stim_lenght</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;stim_lenght&quot;</span><span class="p">]</span>
-    <span class="n">stim_start</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;stim_start&quot;</span><span class="p">]</span>
-    <span class="n">stim_end</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;stim_end&quot;</span><span class="p">]</span>
-    <span class="n">peak_frequency</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;peak_frequency&quot;</span><span class="p">]</span>
-    <span class="n">spikecount</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="s2">&quot;spikecount&quot;</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">stim_lenght</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">stim_end</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">stim_start</span><span class="p">]</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>  <span class="c1"># /1000 to go from milisec to sec</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">peak_frequency</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">spikecount</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">stim_lenght</span><span class="p">]</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="n">stim_lenght</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">df</span><span class="p">[</span><span class="n">stim_end</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">stim_start</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>  <span class="c1"># /1000 to go from milisec to sec</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">peak_frequency</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">spikecount</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">stim_lenght</span><span class="p">]</span>
-
-    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">peak_frequency</span><span class="p">]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">peak_frequency</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">out_features</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">stim_lenght</span><span class="p">,</span> <span class="n">peak_frequency</span><span class="p">])</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">peak_frequency</span><span class="p">]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">peak_frequency</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">out_features</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">stim_lenght</span><span class="p">,</span> <span class="n">peak_frequency</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">out_features</span></div>
 
 
-<div class="viewcode-block" id="compute_ap_potential_columns"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_ap_potential_columns">[docs]</a><span class="k">def</span> <span class="nf">compute_ap_potential_columns</span><span class="p">(</span>
+<div class="viewcode-block" id="compute_peak_columns"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_peak_columns">[docs]</a><span class="k">def</span> <span class="nf">compute_peak_columns</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">out_features</span><span class="p">:</span> <span class="nb">list</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the peak frequency</span>
+<span class="sd">    |  :param df: data from which frequency should be exctracted</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  data with new column, peak frequency</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">peak_values_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;peak_values&quot;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">peak_values_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">feat_dict</span> <span class="o">=</span> <span class="n">peak_values_dict</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">,</span> <span class="n">out_dict_feat</span> <span class="o">=</span> <span class="n">extract_first_sec_mean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">feat_dict</span><span class="p">)</span>
+        <span class="n">out_features</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">out_dict_feat</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">out_features</span></div>
+
+
+<div class="viewcode-block" id="compute_other_columns"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.compute_other_columns">[docs]</a><span class="k">def</span> <span class="nf">compute_other_columns</span><span class="p">(</span>
     <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">out_features</span><span class="p">:</span> <span class="nb">list</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param df: data from which frequency should be exctracted</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: data with new column, peak frequency</span>
+<span class="sd">    |  :param df: data from which frequency should be exctracted</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  data with new column, peak frequency</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">ap_potential_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;ap_potential&quot;</span><span class="p">]</span>
-    <span class="n">AP_begin_voltage</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;AP_begin_voltage&quot;</span><span class="p">]</span>
-    <span class="n">min_list_size</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;min_list_size&quot;</span><span class="p">]</span>
-    <span class="n">AP_mean_wo_first</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;AP_mean_wo_first&quot;</span><span class="p">]</span>
-    <span class="n">AP_stdev_wo_first</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;AP_stdev_wo_first&quot;</span><span class="p">]</span>
-    <span class="n">AP_mean</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;AP_mean&quot;</span><span class="p">]</span>
-    <span class="n">AP_stdev</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;AP_stdev&quot;</span><span class="p">]</span>
-    <span class="n">first_AP_voltage</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;first_AP_voltage&quot;</span><span class="p">]</span>
-    <span class="n">second_AP_voltage</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="s2">&quot;second_AP_voltage&quot;</span><span class="p">]</span>
+    <span class="n">ap_potential_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;other_values&quot;</span><span class="p">]</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_min_list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">min_list_size</span><span class="p">)</span>
-    <span class="p">)</span>
-
-    <span class="c1"># features covering all AP</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">AP_mean</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">AP_stdev</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-    <span class="c1"># features of 1st and 2nd spikes</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">first_AP_voltage</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">second_AP_voltage</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-    <span class="c1"># features excluding first spike</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">AP_mean_wo_first</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">AP_stdev_wo_first</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">AP_begin_voltage</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-    <span class="n">out_features</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="n">first_AP_voltage</span><span class="p">,</span>
-            <span class="n">second_AP_voltage</span><span class="p">,</span>
-            <span class="n">AP_mean</span><span class="p">,</span>
-            <span class="n">AP_stdev</span><span class="p">,</span>
-            <span class="n">AP_mean_wo_first</span><span class="p">,</span>
-            <span class="n">AP_stdev_wo_first</span><span class="p">,</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">ap_potential_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">feat_dict</span> <span class="o">=</span> <span class="n">ap_potential_dict</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">,</span> <span class="n">out_dict_feat</span> <span class="o">=</span> <span class="n">extract_first_sec_mean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">feat_dict</span><span class="p">)</span>
+        <span class="n">out_features</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">out_dict_feat</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">out_features</span></div>
 
@@ -562,9 +602,9 @@
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param df: data from which frequency should be exctracted</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: data with new column, peak frequency</span>
+<span class="sd">    |  :param df: data from which frequency should be exctracted</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  data with new column, peak frequency</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">isi_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;ISI_values&quot;</span><span class="p">]</span>
@@ -586,64 +626,152 @@
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    :param df: data from which frequency should be exctracted</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: data with new column, peak frequency</span>
+<span class="sd">    |  :param df: data from which frequency should be exctracted</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:  data with new column, peak frequency</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">ahp_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;ahp_values&quot;</span><span class="p">]</span>
-    <span class="n">tau_mean</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;tau_mean&quot;</span><span class="p">]</span>
-    <span class="n">tau_stdev</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;tau_stdev&quot;</span><span class="p">]</span>
-    <span class="n">ahp_fall_tau</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;ahp_fall_tau&quot;</span><span class="p">]</span>
-    <span class="n">first_fall_tau</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;first_fall_tau&quot;</span><span class="p">]</span>
-    <span class="n">second_fall_tau</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;second_fall_tau&quot;</span><span class="p">]</span>
+    <span class="n">AHP_fall_tau_dict</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;AHP_fall_tau&quot;</span><span class="p">]</span>
+    <span class="n">min_AHP_voltage_dict</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;min_AHP_voltage&quot;</span><span class="p">]</span>
+    <span class="n">AHP_duration_dict</span> <span class="o">=</span> <span class="n">ahp_dict</span><span class="p">[</span><span class="s2">&quot;AHP_duration&quot;</span><span class="p">]</span>
 
-    <span class="c1"># features covering all APtau</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">tau_mean</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">ahp_fall_tau</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">tau_stdev</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">ahp_fall_tau</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">AHP_fall_tau_feat</span> <span class="o">=</span> <span class="n">extract_first_sec_mean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">AHP_fall_tau_dict</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">min_AHP_voltage_feat</span> <span class="o">=</span> <span class="n">extract_first_sec_mean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">min_AHP_voltage_dict</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">AHP_duration_feat</span> <span class="o">=</span> <span class="n">extract_first_sec_mean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">AHP_duration_dict</span><span class="p">)</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="n">ahp_fall_tau</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">ahp_fall_tau</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_min_list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">out_features</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">AHP_fall_tau_feat</span> <span class="o">+</span> <span class="n">min_AHP_voltage_feat</span> <span class="o">+</span> <span class="n">AHP_duration_feat</span><span class="p">)</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="n">first_fall_tau</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">ahp_fall_tau</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">second_fall_tau</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">ahp_fall_tau</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-    <span class="n">out_features</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">tau_mean</span><span class="p">,</span> <span class="n">tau_stdev</span><span class="p">,</span> <span class="n">first_fall_tau</span><span class="p">,</span> <span class="n">second_fall_tau</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">out_features</span></div>
+
+
+<div class="viewcode-block" id="extract_first_sec_mean"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.extract_first_sec_mean">[docs]</a><span class="k">def</span> <span class="nf">extract_first_sec_mean</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">feature_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    create the spikes features by selecting the data of the 1st, 2nd and average value</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param feature_dict:</span>
+<span class="sd">    |  :return: dataframe with new (spikes) features and list of columns names</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">feature_base_name</span> <span class="o">=</span> <span class="n">feature_dict</span><span class="p">[</span><span class="s2">&quot;feature_base_name&quot;</span><span class="p">]</span>
+    <span class="n">feature_nick_name</span> <span class="o">=</span> <span class="n">feature_dict</span><span class="p">[</span><span class="s2">&quot;feature_nick_name&quot;</span><span class="p">]</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;mean_</span><span class="si">{</span><span class="n">feature_nick_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature_base_name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="n">feature_base_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature_base_name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_min_list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;first_</span><span class="si">{</span><span class="n">feature_nick_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature_base_name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;second_</span><span class="si">{</span><span class="n">feature_nick_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature_base_name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;mean_</span><span class="si">{</span><span class="n">feature_nick_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;first_</span><span class="si">{</span><span class="n">feature_nick_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;second_</span><span class="si">{</span><span class="n">feature_nick_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="pivot_protocol_table"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.pivot_protocol_table">[docs]</a><span class="k">def</span> <span class="nf">pivot_protocol_table</span><span class="p">(</span>
     <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">out_features</span><span class="p">:</span> <span class="nb">list</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    :param df:</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :param out_features:</span>
-<span class="sd">    :return:</span>
+<span class="sd">    |  Orchestrate table pivot</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :param out_features:</span>
+<span class="sd">    |  :return: pivoted table</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="n">pivot_dict</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;pivot_dict&quot;</span><span class="p">]</span>
-    <span class="n">index_columns</span> <span class="o">=</span> <span class="n">pivot_dict</span><span class="p">[</span><span class="s2">&quot;index_columns&quot;</span><span class="p">]</span>
-    <span class="n">pivot_index</span> <span class="o">=</span> <span class="n">pivot_dict</span><span class="p">[</span><span class="s2">&quot;pivot_index&quot;</span><span class="p">]</span>
+
     <span class="n">pivot_columns</span> <span class="o">=</span> <span class="n">pivot_dict</span><span class="p">[</span><span class="s2">&quot;pivot_columns&quot;</span><span class="p">]</span>
+
+    <span class="n">index_columns</span><span class="p">,</span> <span class="n">pivot_index</span> <span class="o">=</span> <span class="n">get_column_and_pivot_index</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">)</span>
 
     <span class="n">pivot_input</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">out_features</span> <span class="o">+</span> <span class="n">index_columns</span><span class="p">]</span>
 
     <span class="n">rename_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">out_features</span><span class="p">,</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_stim&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">out_features</span><span class="p">]))</span>
     <span class="n">pivot_input_final</span> <span class="o">=</span> <span class="n">pivot_input</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">rename_dict</span><span class="p">)</span>
+    <span class="n">pivot_values</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_stim&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">out_features</span><span class="p">]</span>
 
-    <span class="n">features_df_flat</span> <span class="o">=</span> <span class="n">pivot_input_final</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">pivot_input_final</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="o">-</span><span class="mi">1500</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">features_df_flat</span> <span class="o">=</span> <span class="n">pivot_input_final</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
         <span class="n">index</span><span class="o">=</span><span class="n">pivot_index</span><span class="p">,</span>
         <span class="n">columns</span><span class="o">=</span><span class="n">pivot_columns</span><span class="p">,</span>
-        <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_stim&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">out_features</span><span class="p">],</span>
+        <span class="n">values</span><span class="o">=</span><span class="n">pivot_values</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">features_df_flat</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">column</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">features_df_flat</span><span class="o">.</span><span class="n">columns</span>
     <span class="p">]</span>
     <span class="n">features_df_flat</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">features_df_flat</span></div>
+
+
+<div class="viewcode-block" id="get_column_and_pivot_index"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_column_and_pivot_index">[docs]</a><span class="k">def</span> <span class="nf">get_column_and_pivot_index</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    |  Get the 2 lists of columns required for the pivot fiunction</span>
+<span class="sd">    |  :param protocol_dict: protocol parameters subdict</span>
+<span class="sd">    |  :return: list of features for the pivot index and column parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">preprocessing_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;preprocessing_features&quot;</span><span class="p">]</span>
+    <span class="n">pivot_columns</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;pivot_dict&quot;</span><span class="p">][</span><span class="s2">&quot;pivot_columns&quot;</span><span class="p">]</span>
+    <span class="n">fixed_value_columns</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;trace_level&quot;</span><span class="p">][</span><span class="s2">&quot;fixed_value_columns&quot;</span><span class="p">]</span>
+
+    <span class="n">stim_start</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;freq_dict&quot;</span><span class="p">][</span><span class="s2">&quot;stim_start&quot;</span><span class="p">]</span>
+    <span class="n">stim_end</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;freq_dict&quot;</span><span class="p">][</span><span class="s2">&quot;stim_end&quot;</span><span class="p">]</span>
+    <span class="n">spikecount</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;freq_dict&quot;</span><span class="p">][</span><span class="s2">&quot;spikecount&quot;</span><span class="p">]</span>
+
+    <span class="n">cols_to_neglect</span> <span class="o">=</span> <span class="p">[</span><span class="n">stim_start</span><span class="p">,</span> <span class="n">stim_end</span><span class="p">,</span> <span class="n">spikecount</span><span class="p">]</span>
+
+    <span class="n">index_columns</span> <span class="o">=</span> <span class="n">fixed_value_columns</span> <span class="o">+</span> <span class="n">preprocessing_features</span>
+    <span class="n">index_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">index_columns</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">t</span> <span class="ow">in</span> <span class="n">cols_to_neglect</span><span class="p">)]</span>
+
+    <span class="n">pivot_index</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">index_columns</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">t</span> <span class="ow">in</span> <span class="n">pivot_columns</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">index_columns</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pivot_index</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_preprocessing_columns"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_preprocessing_columns">[docs]</a><span class="k">def</span> <span class="nf">get_preprocessing_columns</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    |  Collect the list of columns that are required for the preprocessing different subgroups</span>
+<span class="sd">    |  :param protocol_dict: protocol parameters subdict</span>
+<span class="sd">    |  :return: list of columns for preprocessing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">preprocessing_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;preprocessing_features&quot;</span><span class="p">]</span>
+    <span class="n">double_extract_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;double_extract_features&quot;</span><span class="p">]</span>
+    <span class="n">single_extract_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;single_extract_features&quot;</span><span class="p">]</span>
+
+    <span class="n">fixed_value_columns</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;trace_level&quot;</span><span class="p">][</span><span class="s2">&quot;fixed_value_columns&quot;</span><span class="p">]</span>
+
+    <span class="n">peak_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;peak_values&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+        <span class="n">preprocessing_features</span>
+        <span class="o">+</span> <span class="n">double_extract_features</span>
+        <span class="o">+</span> <span class="n">single_extract_features</span>
+        <span class="o">+</span> <span class="n">fixed_value_columns</span>
+        <span class="o">+</span> <span class="n">peak_values</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_trace_level_cols"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.utils_mat_file_extraction.get_trace_level_cols">[docs]</a><span class="k">def</span> <span class="nf">get_trace_level_cols</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    |  Collect the list of columns that are at trace level from the different subgroups</span>
+<span class="sd">    |  :param protocol_dict:</span>
+<span class="sd">    |  :return: List of trace level columns</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">preprocessing_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;preprocessing_features&quot;</span><span class="p">]</span>
+    <span class="n">double_extract_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;double_extract_features&quot;</span><span class="p">]</span>
+    <span class="n">single_extract_features</span> <span class="o">=</span> <span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;single_extract_features&quot;</span><span class="p">]</span>
+
+    <span class="n">peak_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">protocol_dict</span><span class="p">[</span><span class="s2">&quot;peak_values&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+        <span class="n">preprocessing_features</span>
+        <span class="o">+</span> <span class="n">double_extract_features</span>
+        <span class="o">+</span> <span class="n">single_extract_features</span>
+        <span class="o">+</span> <span class="n">peak_values</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
 </pre></div>
 
            </div>

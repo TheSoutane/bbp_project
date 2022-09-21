@@ -9,8 +9,8 @@ test_mat_file_name:
 
 CellList:
   type: pandas.CSVDataSet
-  filepath: data/01_raw/CellList_curated.csv
-  #filepath: data/01_raw/CellList_test.csv
+  #filepath: data/01_raw/CellList_curated.csv
+  filepath: data/01_raw/CellList_test.csv
 
 cells_extracted_raw:
   type: pandas.CSVDataSet
@@ -53,6 +53,10 @@ statistical_significance:
 clustering_output:
   type: pandas.CSVDataSet
   filepath: data/05_clustering/clustering_output.csv
+
+clustering_output_unsc:
+  type: pandas.CSVDataSet
+  filepath: data/05_clustering/clustering_output_unsc.csv
 
 clustering_output_norm:
   type: pandas.CSVDataSet

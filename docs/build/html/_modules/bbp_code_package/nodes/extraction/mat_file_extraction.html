@@ -93,7 +93,8 @@
               
             
             
-              <ul>
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">bbp_code_package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../bbp_code_package.html">bbp_code_package package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#subpackages">Subpackages</a><ul>
@@ -175,7 +176,7 @@
             
   <h1>Source code for bbp_code_package.nodes.extraction.mat_file_extraction</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
-
+<span class="kn">import</span> <span class="nn">bbp_code_package.nodes.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">import</span> <span class="nn">bbp_code_package.nodes.extraction.utils_mat_file_extraction</span> <span class="k">as</span> <span class="nn">mat_utils</span>
@@ -183,87 +184,82 @@
 
 <div class="viewcode-block" id="extract_preformat_mat_file"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.mat_file_extraction.extract_preformat_mat_file">[docs]</a><span class="k">def</span> <span class="nf">extract_preformat_mat_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Exteract and preformat features from the .mat file</span>
-<span class="sd">    :param filename: File to process</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return:</span>
-<span class="sd">        cellinfo: pandas series containing the high level cell information</span>
-<span class="sd">        apwaveform_features: features extracted from the APWaveform protocol</span>
+<span class="sd">    |  Extract and preformat features from the .mat file</span>
+<span class="sd">    |  :param filename: File to process</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    |  cellinfo: pandas series containing the high level cell information</span>
+<span class="sd">    |  apwaveform_features: features extracted from the APWaveform protocol</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;_____________&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="n">filepath</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;mat_file_path&quot;</span><span class="p">]</span>
+    <span class="n">mat_file_path</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;mat_file_path&quot;</span><span class="p">]</span>
+    <span class="n">mat_file_path</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span><span class="n">mat_file_path</span><span class="p">)</span>
 
-    <span class="n">raw_file</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">load_mat_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">raw_file</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">load_mat_file</span><span class="p">(</span><span class="n">mat_file_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
 
     <span class="n">cellinfo</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">extract_cell_info</span><span class="p">(</span><span class="n">raw_file</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
 
     <span class="n">protocols_index_dict</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">get_protocol_dict</span><span class="p">(</span><span class="n">raw_file</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;APWaveform&quot;</span> <span class="ow">in</span> <span class="n">protocols_index_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">apwaveform_features</span> <span class="o">=</span> <span class="n">apwaveform_extraction</span><span class="p">(</span>
-            <span class="n">raw_file</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">protocols_index_dict</span>
+
+    <span class="n">features_extraction_dict</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;features_extraction_dict&quot;</span><span class="p">]</span>
+
+    <span class="n">protocol_data_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features_extraction_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">protocol_tag</span> <span class="o">=</span> <span class="n">features_extraction_dict</span><span class="p">[</span><span class="n">feature</span><span class="p">][</span><span class="s2">&quot;protocol_tag&quot;</span><span class="p">]</span>
+        <span class="n">protocol_marker</span> <span class="o">=</span> <span class="n">features_extraction_dict</span><span class="p">[</span><span class="n">feature</span><span class="p">][</span><span class="s2">&quot;protocol_marker&quot;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">protocol_tag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">protocol_tag</span> <span class="ow">in</span> <span class="n">protocols_index_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;processing&quot;</span><span class="p">)</span>
+            <span class="n">protocol_features</span> <span class="o">=</span> <span class="n">features_extraction_orchestrator</span><span class="p">(</span>
+                <span class="n">raw_file</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">protocols_index_dict</span><span class="p">,</span> <span class="n">protocol_marker</span>
+            <span class="p">)</span>
+            <span class="n">protocol_features</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">protocol_marker</span><span class="si">}</span><span class="s2">availability&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">protocol_tag</span> <span class="o">==</span> <span class="s2">&quot;other&quot;</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">pdb</span>
+
+                <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;missing&quot;</span><span class="p">)</span>
+            <span class="n">protocol_features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="n">protocol_features</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">protocol_marker</span><span class="si">}</span><span class="s2">availability&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">protocol_data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">protocol_features</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cellinfo</span><span class="p">,</span> <span class="n">protocol_data_list</span></div>
+
+
+<div class="viewcode-block" id="features_extraction_orchestrator"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.mat_file_extraction.features_extraction_orchestrator">[docs]</a><span class="k">def</span> <span class="nf">features_extraction_orchestrator</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">protocols_index_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">protocol_marker</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    |  Orchestrates the extraction and the formatting of the apwaveform data</span>
+<span class="sd">    |  :param df: dataframe to be processed raw mat file</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return: dataframe with ap_waveform features</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">protocol_dict</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;features_extraction_dict&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">protocol_marker</span><span class="si">}</span><span class="s2">dict&quot;</span><span class="p">]</span>
+    <span class="n">protocol_raw</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">extract_protocol_data</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">protocols_index_dict</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;cheops&quot;</span> <span class="ow">in</span> <span class="n">protocol_marker</span><span class="p">:</span>
+
+        <span class="n">df_features</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">extract_cheops</span><span class="p">(</span><span class="n">protocol_raw</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">protocol_raw</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">get_spikecount</span><span class="p">(</span><span class="n">protocol_raw</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">)</span>
+
+        <span class="n">protocol_trace_level</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">flatten_at_trace_level</span><span class="p">(</span>
+            <span class="n">protocol_raw</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="o">=</span><span class="n">protocol_dict</span>
         <span class="p">)</span>
-        <span class="n">apwaveform_features</span><span class="p">[</span><span class="s2">&quot;apwaveform_availability&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">apwaveform_features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-        <span class="n">apwaveform_features</span><span class="p">[</span><span class="s2">&quot;apwaveform_availability&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">if</span> <span class="s2">&quot;IDRest&quot;</span> <span class="ow">in</span> <span class="n">protocols_index_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">idrest_features</span> <span class="o">=</span> <span class="n">idrest_extraction</span><span class="p">(</span><span class="n">raw_file</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">protocols_index_dict</span><span class="p">)</span>
-        <span class="n">idrest_features</span><span class="p">[</span><span class="s2">&quot;idrest_availability&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">idrest_features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-        <span class="n">idrest_features</span><span class="p">[</span><span class="s2">&quot;idrest_availability&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">df_features</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">features_extraction</span><span class="p">(</span><span class="n">protocol_trace_level</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">cellinfo</span><span class="p">,</span> <span class="n">apwaveform_features</span><span class="p">,</span> <span class="n">idrest_features</span></div>
-
-
-<div class="viewcode-block" id="apwaveform_extraction"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.mat_file_extraction.apwaveform_extraction">[docs]</a><span class="k">def</span> <span class="nf">apwaveform_extraction</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">protocols_index_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Orchestrates the extraction and the formatting of the apwaveform data</span>
-<span class="sd">    :param df: raw mat file</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: dataframe with ap_waveform features</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">protocol_dict</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;apwaveform_dict&quot;</span><span class="p">]</span>
-
-    <span class="n">protocol_raw</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">extract_protocol_data</span><span class="p">(</span>
-        <span class="n">df</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">protocols_index_dict</span>
-    <span class="p">)</span>
-    <span class="n">protocol_trace_level</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">flatten_at_trace_level</span><span class="p">(</span>
-        <span class="n">protocol_raw</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="o">=</span><span class="n">protocol_dict</span>
-    <span class="p">)</span>
-    <span class="n">apwaveform_features</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">apwaveform_features_extraction</span><span class="p">(</span>
-        <span class="n">protocol_trace_level</span><span class="p">,</span> <span class="n">protocol_dict</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">apwaveform_features</span><span class="o">.</span><span class="n">add_prefix</span><span class="p">(</span><span class="s2">&quot;apwaveform_&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="idrest_extraction"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.extraction.html#bbp_code_package.nodes.extraction.mat_file_extraction.idrest_extraction">[docs]</a><span class="k">def</span> <span class="nf">idrest_extraction</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">protocols_index_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Orchestrates the extraction and the formatting of the idrest data</span>
-<span class="sd">    :param df: raw mat file</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return: dataframe with ap_waveform features</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">protocol_dict</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;idrest_dict&quot;</span><span class="p">]</span>
-
-    <span class="n">protocol_raw</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">extract_protocol_data</span><span class="p">(</span>
-        <span class="n">df</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="p">,</span> <span class="n">protocols_index_dict</span>
-    <span class="p">)</span>
-    <span class="n">protocol_trace_level</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">flatten_at_trace_level</span><span class="p">(</span>
-        <span class="n">protocol_raw</span><span class="p">,</span> <span class="n">protocol_dict</span><span class="o">=</span><span class="n">protocol_dict</span>
-    <span class="p">)</span>
-    <span class="n">idrest_features</span> <span class="o">=</span> <span class="n">mat_utils</span><span class="o">.</span><span class="n">idrest_features_extraction</span><span class="p">(</span>
-        <span class="n">protocol_trace_level</span><span class="p">,</span> <span class="n">protocol_dict</span>
-    <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">idrest_features</span><span class="o">.</span><span class="n">add_prefix</span><span class="p">(</span><span class="s2">&quot;idrest_&quot;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">df_features</span><span class="o">.</span><span class="n">add_prefix</span><span class="p">(</span><span class="n">protocol_marker</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

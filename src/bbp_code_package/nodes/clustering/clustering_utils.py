@@ -1,20 +1,46 @@
 import pandas as pd
 import scipy.cluster.hierarchy as shc
 import matplotlib.pyplot as plt
-from sklearn.cluster import AgglomerativeClustering
-from sklearn.preprocessing import normalize
+from joblib import dump, load
+from typing import Any, Dict
+
+# from sklearn.cluster import AgglomerativeClustering
+# from sklearn.preprocessing import normalize
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 
 
-def extract_clustering_features(df, parameters):
+def one_hot_encoding_input(df: pd.DataFrame, parameters: Dict[str, Any]):
+    """
+    |  One Hot encode descriptive columns for cluster analysis
+    |  :param df: dataframe to be processed
+    |  :param parameters: dict of pipeline parameters
+    |  :return:
+    """
+    cols_to_ohe = parameters["clustering_dict"]["data_prep"]["cols_to_ohe"]
+    df_encoded = pd.get_dummies(data=df, columns=cols_to_ohe)
+    return df_encoded
 
+
+def extract_clustering_features(df: pd.DataFrame, parameters: Dict[str, Any]):
+    """
+    |  TBC: THIS FUNCTION MIGHT BE DEPRECATED
+    |  Extract the columns used for the clustering distance based on tags
+    |  :param df: dataframe to be processed
+    |  :param parameters: dict of pipeline parameters
+    |  :return:
+    """
     cols_to_cluster = get_features_from_markers(df, parameters)
     return df[cols_to_cluster], cols_to_cluster
 
 
-def get_features_from_markers(df, parameters):
-
+def get_features_from_markers(df: pd.DataFrame, parameters: Dict[str, Any]):
+    """
+    |  Collect all feature with a specific tag in it
+    |  :param df: dataframe to be processed
+    |  :param parameters: dict of pipeline parameters
+    |  :return:
+    """
     clustering_markers = parameters["clustering_dict"]["data_prep"][
         "clustering_markers"
     ]
@@ -26,7 +52,14 @@ def get_features_from_markers(df, parameters):
     return cols_to_cluster
 
 
-def scale_data(df, cols_to_cluster, parameters):
+def scale_data(df: pd.DataFrame, cols_to_cluster, parameters: Dict[str, Any]):
+    """
+    |  Scale input data using a standartscaler (more adapted for clustering)
+    |  :param df: dataframe to be processed
+    |  :param cols_to_cluster:
+    |  :param parameters: dict of pipeline parameters
+    |  :return:
+    """
     df_cluster = df[cols_to_cluster].copy()
     df_scaled = df_cluster.copy()
     df_scaled = df_scaled.fillna(df_scaled.mean())
@@ -39,7 +72,44 @@ def scale_data(df, cols_to_cluster, parameters):
     return df_scaled, scaler
 
 
-def get_normalization_per_group_dict(cols_to_cluster, parameters):
+def save_scaler(scaler, parameters: Dict[str, Any]):
+    scaler_path = parameters["clustering_dict"]["scaler_path"]
+    dump(scaler, scaler_path, compress=True)
+
+
+def load_scaler(parameters: Dict[str, Any]):
+    scaler_path = parameters["clustering_dict"]["scaler_path"]
+
+    return load(scaler_path)
+
+
+def unscale_df(scaled_df: pd.DataFrame, parameters: Dict[str, Any]):
+    """
+    |  Descale DF for the cluster analysis
+    |  :param scaled_df:
+    |  :param parameters: dict of pipeline parameters
+    |  :return:
+    """
+    scaler = load_scaler(parameters)
+    unscaled_df = scaler.inverse_transform(scaled_df)
+
+    return unscaled_df
+
+
+def get_normalization_per_group_dict(cols_to_cluster: list, parameters: Dict[str, Any]):
+    """
+    |  Aggregate features in a dict for distance normalisation
+    |
+    |  Why ?
+    |  We normalize "clustering groups" in order to balance clustering.
+    |  Dummy example: We want the APWaveform AP_ style features (3 different feats) to have the same importance as the
+    |  vHold. Therefore, The NORMALIZED AP features are divided by 3 so the total importance of the AP feats equal the
+    |  one of vHold
+    |  :param cols_to_cluster:
+    |  :param parameters: dict of pipeline parameters
+    |  :return: dict with features types as entry and features list as output. This will be used to scale
+    |  the clustering distance
+    """
 
     protocol_markers = parameters["clustering_dict"]["data_prep"]["protocol_markers"]
     clustering_markers = parameters["clustering_dict"]["data_prep"][
@@ -63,7 +133,20 @@ def get_normalization_per_group_dict(cols_to_cluster, parameters):
     return normalization_per_group_dict
 
 
-def get_normalization_per_group(df, normalization_per_group_dict):
+def get_normalization_per_group(
+    df: pd.DataFrame, normalization_per_group_dict: Dict[str, Any]
+):
+    """
+    |  Runs distance normalisation. Why ?
+    |  We normalize "clustering groups" in order to balance clustering.
+    |  Dummy example: We want the APWaveform AP_ style features (3 different feats) to have the same importance as the
+    |  vHold. Therefore, The NORMALIZED AP features are divided by 3 so the total importance of the AP feats equal the
+    |  one of vHold
+
+    |  :param df: dataframe to be processed
+    |  :param normalization_per_group_dict:
+    |  :return: df with scaled columns (see descr for explanation)
+    """
 
     for key in normalization_per_group_dict.keys():
         for sub_key in normalization_per_group_dict[key].keys():
@@ -73,26 +156,54 @@ def get_normalization_per_group(df, normalization_per_group_dict):
     return df
 
 
-def get_cluster_analysis_output(df, cuttree_df):
+def get_cluster_analysis_output(
+    df: pd.DataFrame, df_unscaled: pd.DataFrame, cuttree_df: pd.DataFrame
+):
+    """
+    |  Process the outputs of the clustering algorithm to produce the files used in the analysis
+    |  :param df: dataframe to be processed
+    |  :param df_unscaled:
+    |  :param cuttree_df: Clustering output. It contains the clustering tree obtained after the use of
+    |  agglomerative clustering
+    |  :return:
+    |  df_cluster_all: Df with all clustering outputs (multiple number of clusters)
+    |  df_cluster_unsc_all: de-scaled df_cluster_all
+    |  pd.concat(cluster_output_list).transpose(): clustering output
+    """
+
     cluster_output_list = []
+
     df_cluster_all = pd.concat([df, cuttree_df], axis=1)
+    df_cluster_unsc_all = pd.concat([df_unscaled, cuttree_df], axis=1)
+
     for cluster_column in cuttree_df.columns:
         cutree = cuttree_df[cluster_column]
         df_cluster = pd.concat([df, cutree], axis=1)
         df_cluster.columns = df.columns.tolist() + ["cluster"]
 
-        #scaler = StandardScaler()
-        #df_cluster_norm = scaler.fit_transform(df_cluster)
-        #df_cluster_norm = pd.DataFrame(df_cluster_norm, columns=df_cluster.columns)
         centroids = df_cluster.groupby("cluster").mean()
-        centroids['cluster_column'] = cluster_column
+        centroids["cluster_column"] = cluster_column
         cluster_output_list.append(centroids)
 
-        #centroids_norm = df_cluster_norm.groupby("cluster").mean()
-    return df_cluster_all, pd.concat(cluster_output_list).transpose()
+        # centroids_norm = df_cluster_norm.groupby("cluster").mean()
+    return (
+        df_cluster_all,
+        df_cluster_unsc_all,
+        pd.concat(cluster_output_list).transpose(),
+    )
 
 
-def run_agglomerative_clustering(df_scaled, n_clusters_list, fig_savepath, agg_method):
+def run_agglomerative_clustering(
+    df_scaled: pd.DataFrame, n_clusters_list: list, fig_savepath: str, agg_method: str
+):
+    """
+   |   Orchestrates the processing of agglomerative clustering
+    |  :param df_scaled:
+    |  :param n_clusters_list: number of clusters to be analysed
+    |  :param fig_savepath: Where to save the figures
+    |  :param agg_method: Agglomeration method
+    |  :return: List of cluster attributions of input dataframe
+    """
 
     agglomerative_output = shc.linkage(df_scaled, method=agg_method)
     cutree_list = []
@@ -107,7 +218,7 @@ def run_agglomerative_clustering(df_scaled, n_clusters_list, fig_savepath, agg_m
         plt.figure(figsize=(10, 7))
         plt.title("Customer Dendograms")
         plt.xlabel("cells")
-        dend = shc.dendrogram(agglomerative_output)
+        # dend = shc.dendrogram(agglomerative_output)
 
         plt.ylabel("intra-cluster noise")
         plt.savefig(f"{fig_savepath}/dendogram_{n_clusters}_clusters.pdf")
@@ -118,7 +229,13 @@ def run_agglomerative_clustering(df_scaled, n_clusters_list, fig_savepath, agg_m
     return pd.concat(cutree_list, axis=1)
 
 
-def plot_elbow_aggl_clustering(agglomerative_output, fig_savepath):
+def plot_elbow_aggl_clustering(agglomerative_output: list, fig_savepath: str):
+    """
+    |  Plot the intra noise cluster to see the elbow plot and define the number of clusters to select during the analysis
+    |  :param agglomerative_output:
+    |  :param fig_savepath:
+    |  :return: None, save elbow plot in the savepath
+    """
     intr_cluster_noise_inv = agglomerative_output[-20:, 2]
     intr_cluster_noise = intr_cluster_noise_inv[::-1]
     idxs = np.arange(1, len(intr_cluster_noise) + 1)

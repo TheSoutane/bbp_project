@@ -5,9 +5,10 @@ import pandas as pd
 
 def clean_data_from_cleaning_dict(df: pd.DataFrame, parameters: Dict[str, Any]):
     """
-    :param df:
-    :param parameters:
-    :return:
+    |  Use the Cleaning dict as input and remove outliers accordingly
+    |  :param df: dataframe to be processed
+    |  :param parameters: dict of pipeline parameters
+    |  :return: Cleaned dataframe
     """
     cleaning_dict = parameters["cleaning_dict"]
 

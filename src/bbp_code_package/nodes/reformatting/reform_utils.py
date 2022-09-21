@@ -1,25 +1,25 @@
 import pandas as pd
+from typing import Any, Dict
 
 
 def tau_cap(df: pd.DataFrame, treshold: int):
     """
-    Limit the value of the tau columns to a specific treschold
-    :param df: Data to reformat
-    :param treshold: Max value of Tau column
-    :return: Reformated DataFrame
+    |  Limit the value of the tau columns to a specific treschold
+    |  :param df: Data to reformat
+    |  :param treshold: Max value of Tau column
+    |  :return:  Reformated DataFrame
     """
     tau_cols = [t for t in df.columns if ("tau" in t)]
     df[tau_cols] = df[tau_cols].clip(upper=treshold)
-    # import pdb; pdb.set_trace()
     return df
 
 
 def remove_features_w_no_peaks(df: pd.DataFrame, features_w_no_peaks: list):
     """
-    Remove peak features at stimulations with limited peaks
-    :param df: datafram to correct
-    :param features_w_no_peaks: list of features to be removed
-    :return: df
+    |  Remove peak features at stimulations with limited peaks
+    |  :param df: datafram to correct
+    |  :param features_w_no_peaks: list of features to be removed
+    |  :return:  df without features
     """
 
     df.drop(columns=features_w_no_peaks, inplace=True)
@@ -29,8 +29,8 @@ def remove_features_w_no_peaks(df: pd.DataFrame, features_w_no_peaks: list):
 
 def remove_rows_w_missing_protocols(df: pd.DataFrame):
     """
-    Remove row (or cells) where one protocol is missing
-    :param df:datafram to correct
+    |  Remove row (or cells) where one protocol is missing
+    |  :param df:datafram to correct
 
     """
     protocols_availability_columns = [t for t in df.columns if ("availability" in t)]
@@ -41,12 +41,12 @@ def remove_rows_w_missing_protocols(df: pd.DataFrame):
     return df
 
 
-def get_cell_group(df: pd.DataFrame, parameters):
+def get_cell_group(df: pd.DataFrame, parameters: Dict[str, Any]):
     """
-    Map cell type to cell group
-    :param df: datafram to correct
-    :param group_mapping_params: Mapping dict
-    :return: Df with new column of cell grou
+    |  Map cell type to cell group
+    |  :param df: datafram to correct
+    |  :param group_mapping_params: Mapping dict
+    |  :return:  Df with new column of cell grou
     """
     group_mapping_dict_type = parameters["reformatting_params"]["group_mapping_params"][
         "group_mapping_dict_type"

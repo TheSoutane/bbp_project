@@ -93,7 +93,8 @@
               
             
             
-              <ul>
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">bbp_code_package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../bbp_code_package.html">bbp_code_package package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#subpackages">Subpackages</a><ul>
@@ -175,31 +176,101 @@
             
   <h1>Source code for bbp_code_package.nodes.statistical_analysis.statistical_analysis_main</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils</span> <span class="k">as</span> <span class="nn">stat_utils</span>
+<span class="kn">import</span> <span class="nn">bbp_code_package.nodes.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
 
-<div class="viewcode-block" id="run_statistical_analysis"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis">[docs]</a><span class="k">def</span> <span class="nf">run_statistical_analysis</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<div class="viewcode-block" id="run_statistical_analysis_1_v_1"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis_1_v_1">[docs]</a><span class="k">def</span> <span class="nf">run_statistical_analysis_1_v_1</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    |  Orchestrate the 1V1 statistical test across the data</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">stat_dict</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;statistical_analysis_dict&quot;</span><span class="p">]</span>
+    <span class="n">mann_whitney_dict</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;mann_whitney_dict&quot;</span><span class="p">]</span>
+    <span class="n">cells_to_drop</span> <span class="o">=</span> <span class="n">mann_whitney_dict</span><span class="p">[</span><span class="s2">&quot;cells_to_drop&quot;</span><span class="p">]</span>
+    <span class="n">aggregation_level</span> <span class="o">=</span> <span class="n">mann_whitney_dict</span><span class="p">[</span><span class="s2">&quot;aggregartion_level&quot;</span><span class="p">]</span>
+    <span class="n">features_markers</span> <span class="o">=</span> <span class="n">mann_whitney_dict</span><span class="p">[</span><span class="s2">&quot;features_markers&quot;</span><span class="p">]</span>
+    <span class="n">n_smallest</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;n_smallest&quot;</span><span class="p">]</span>
+    <span class="n">celltypes_to_compare</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="n">aggregation_level</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cells_to_drop</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="n">cols_to_analyse</span> <span class="o">=</span> <span class="n">stat_utils</span><span class="o">.</span><span class="n">get_cols_from_feat_markers</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">features_markers</span><span class="p">)</span>
+
+    <span class="n">stat_sign_df</span> <span class="o">=</span> <span class="n">stat_utils</span><span class="o">.</span><span class="n">run_1_V_1_stat_analysis</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">,</span> <span class="n">celltypes_to_compare</span><span class="p">,</span> <span class="n">cols_to_analyse</span><span class="p">,</span> <span class="n">aggregation_level</span>
+    <span class="p">)</span>
+    <span class="c1"># other function</span>
+    <span class="c1"># for feature in feature_matrix_dict.keys():</span>
+    <span class="c1">#     f, ax = plt.subplots(figsize=(20, 20))</span>
+    <span class="c1">#     ax = sns.heatmap(feature_matrix_dict[feature])</span>
+    <span class="c1">#     ax.set_title(feature)</span>
+    <span class="c1">#     ax.set_xlabel(celltypes_to_compare)</span>
+    <span class="c1">#     ax.set_ylabel(celltypes_to_compare)</span>
+    <span class="c1">#     filename = f&quot;{feature}.pdf&quot;</span>
+    <span class="c1">#     plt.savefig(filename)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;synthesis&quot;</span><span class="p">)</span>
+    <span class="n">stat_synthesis_df</span> <span class="o">=</span> <span class="n">stat_utils</span><span class="o">.</span><span class="n">get_stat_synthesis</span><span class="p">(</span><span class="n">stat_sign_df</span><span class="p">,</span> <span class="n">n_smallest</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stat_sign_df</span><span class="p">,</span> <span class="n">stat_synthesis_df</span></div>
+
+
+<div class="viewcode-block" id="run_statistical_analysis_1_v_all"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis_1_v_all">[docs]</a><span class="k">def</span> <span class="nf">run_statistical_analysis_1_v_all</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Orchestrator running the statistical analysis on the formatted data</span>
-<span class="sd">    :param df:</span>
-<span class="sd">    :param parameters:</span>
-<span class="sd">    :return:</span>
+<span class="sd">    |  Orchestrator running the statistical analysis on the formatted data</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param parameters: dict of pipeline parameters</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    |  stat_significance_df: Dataframe containing the statistical significance of each celltype_1/celltype_2/feature</span>
+<span class="sd">    |  statistical_analysis: synthesis of the statistical analysis</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">stat_dict</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;statistical_analysis_dict&quot;</span><span class="p">]</span>
     <span class="n">features_markers</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;boxplot_dict&quot;</span><span class="p">][</span><span class="s2">&quot;features_markers&quot;</span><span class="p">]</span>
     <span class="n">class_features</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;class_features&quot;</span><span class="p">]</span>
     <span class="n">savepath</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;savepath&quot;</span><span class="p">]</span>
+    <span class="n">savepath</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span><span class="n">savepath</span><span class="p">)</span>
+
     <span class="n">boxplot_savefile</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;boxplot_dict&quot;</span><span class="p">][</span><span class="s2">&quot;boxplot_savefile&quot;</span><span class="p">]</span>
 
     <span class="n">cols_to_analyse</span> <span class="o">=</span> <span class="n">stat_utils</span><span class="o">.</span><span class="n">get_cols_from_feat_markers</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">features_markers</span><span class="p">)</span>
-    <span class="c1"># import pdb; pdb.set_trace()</span>
     <span class="n">stat_utils</span><span class="o">.</span><span class="n">get_html_box_plot</span><span class="p">(</span>
         <span class="n">df</span><span class="p">,</span> <span class="n">cols_to_analyse</span><span class="p">,</span> <span class="n">class_features</span><span class="p">,</span> <span class="n">savepath</span><span class="p">,</span> <span class="n">boxplot_savefile</span>
     <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span></div>
+    <span class="n">run_t_test</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;run_t_test&quot;</span><span class="p">]</span>
+    <span class="n">run_mann_whitney</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;run_mann_whitney&quot;</span><span class="p">]</span>
+
+    <span class="n">stat_significance_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">run_t_test</span><span class="p">:</span>
+        <span class="n">t_test_dict</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;t_test_dict&quot;</span><span class="p">]</span>
+        <span class="n">stat_significance_t_test</span> <span class="o">=</span> <span class="n">stat_utils</span><span class="o">.</span><span class="n">run_stat_test</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">t_test_dict</span><span class="p">,</span> <span class="s2">&quot;t_test&quot;</span><span class="p">)</span>
+        <span class="n">stat_significance_t_test</span><span class="p">[</span><span class="s2">&quot;test_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;t_test&quot;</span>
+        <span class="c1"># stat_utils.plot_stat_test(stat_significance_t_test, t_test_dict)</span>
+        <span class="n">stat_significance_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">stat_significance_df</span><span class="p">,</span> <span class="n">stat_significance_t_test</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">run_mann_whitney</span><span class="p">:</span>
+        <span class="n">mann_whitney_dict</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;mann_whitney_dict&quot;</span><span class="p">]</span>
+        <span class="n">stat_significance_m_w</span> <span class="o">=</span> <span class="n">stat_utils</span><span class="o">.</span><span class="n">run_stat_test</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span> <span class="n">mann_whitney_dict</span><span class="p">,</span> <span class="s2">&quot;mann_whitney&quot;</span>
+        <span class="p">)</span>
+        <span class="n">stat_significance_m_w</span><span class="p">[</span><span class="s2">&quot;test_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mann_whitney&quot;</span>
+        <span class="c1"># stat_utils.plot_stat_test(stat_significance_m_w, mann_whitney_dict)</span>
+        <span class="n">stat_significance_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">stat_significance_df</span><span class="p">,</span> <span class="n">stat_significance_m_w</span><span class="p">])</span>
+
+    <span class="n">statistical_analysis</span> <span class="o">=</span> <span class="n">stat_utils</span><span class="o">.</span><span class="n">get_statistical_analysis</span><span class="p">(</span>
+        <span class="n">stat_significance_df</span><span class="p">,</span> <span class="n">stat_dict</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stat_significance_df</span><span class="p">,</span> <span class="n">statistical_analysis</span></div>
 </pre></div>
 
            </div>

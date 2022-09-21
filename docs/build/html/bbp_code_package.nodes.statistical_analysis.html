@@ -94,7 +94,8 @@
               
             
             
-              <ul>
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">bbp_code_package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="bbp_code_package.html">bbp_code_package package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#subpackages">Subpackages</a><ul>
@@ -206,44 +207,119 @@
 <section id="module-bbp_code_package.nodes.statistical_analysis.statistical_analysis_main">
 <span id="bbp-code-package-nodes-statistical-analysis-statistical-analysis-main-module"></span><h2>bbp_code_package.nodes.statistical_analysis.statistical_analysis_main module<a class="headerlink" href="#module-bbp_code_package.nodes.statistical_analysis.statistical_analysis_main" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis">
-<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.</code><code class="sig-name descname">run_statistical_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_main.html#run_statistical_analysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Orchestrator running the statistical analysis on the formatted data
-:param df:
-:param parameters:
-:return:</p>
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis_1_v_1">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.</code><code class="sig-name descname">run_statistical_analysis_1_v_1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_main.html#run_statistical_analysis_1_v_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis_1_v_1" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Orchestrate the 1V1 statistical test across the data</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis_1_v_all">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.</code><code class="sig-name descname">run_statistical_analysis_1_v_all</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_main.html#run_statistical_analysis_1_v_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_main.run_statistical_analysis_1_v_all" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Orchestrator running the statistical analysis on the formatted data</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+<div class="line">stat_significance_df: Dataframe containing the statistical significance of each celltype_1/celltype_2/feature</div>
+<div class="line">statistical_analysis: synthesis of the statistical analysis</div>
+</div>
 </dd></dl>
 
 </section>
 <section id="module-bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils">
 <span id="bbp-code-package-nodes-statistical-analysis-statistical-analysis-utils-module"></span><h2>bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils module<a class="headerlink" href="#module-bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.filter_per_cell_type">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">filter_per_cell_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">celltype</span></em>, <em class="sig-param"><span class="n">aggregation_level</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#filter_per_cell_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.filter_per_cell_type" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param celltype:</div>
+<div class="line">:param aggregation_level:</div>
+<div class="line">:return:</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_cols_from_feat_markers">
 <code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">get_cols_from_feat_markers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">features_markers</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#get_cols_from_feat_markers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_cols_from_feat_markers" title="Permalink to this definition">¶</a></dt>
 <dd><p>List columns with a specific marker
-:param df: Dataframe whose columns needs to be filtered
-:param features_markers: List of markers (‘strings’) to be used for extraction
-:return: List of columns containing at least one of the markers</p>
+|  :param df: Dataframe whose columns needs to be filtered
+|  :param features_markers: List of markers (‘strings’) to be used for extraction
+|  :return:  List of columns containing at least one of the markers</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_html_box_plot">
 <code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">get_html_box_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">cols_to_analyse</span></em>, <em class="sig-param"><span class="n">colour_col</span></em>, <em class="sig-param"><span class="n">savepath</span></em>, <em class="sig-param"><span class="n">savefile</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#get_html_box_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_html_box_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot scattermatrix HTML file over defined dict</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>) – data to plot</p></li>
-<li><p><strong>cols_to_analyse</strong> – columns to be analysed</p></li>
-<li><p><strong>colour_col</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – col used to group data</p></li>
-<li><p><strong>savepath</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – path to savefolder</p></li>
-<li><p><strong>savefile</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path to save sub-file</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Html Box plot of each of the cols_to_analyse, saved in the indicated folder</p>
-</dd>
-</dl>
+<div class="line-block">
+<div class="line">:param df: data to plot</div>
+<div class="line">:param cols_to_analyse: columns to be analysed</div>
+<div class="line">:param colour_col: col used to group data</div>
+<div class="line">:param savepath: path to savefolder</div>
+<div class="line">:param savefile: Path to save sub-file</div>
+<div class="line">:return:  Html Box plot of each of the cols_to_analyse, saved in the indicated folder</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_stat_synthesis">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">get_stat_synthesis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stat_sign_df</span></em>, <em class="sig-param"><span class="n">n_smallest</span></em>, <em class="sig-param"><span class="n">drop_stdev</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#get_stat_synthesis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_stat_synthesis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts instigts fom the raw statistical analysis
+|  :param stat_sign_df:
+|  :return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_statistical_analysis">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">get_statistical_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">stat_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#get_statistical_analysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_statistical_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>synthetize the results of the statistical tests
+|  :param df: dataframe to be processed
+|  :param stat_dict:
+|  :return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.plot_stat_test">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">plot_stat_test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">t_test_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#plot_stat_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.plot_stat_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot the heatmap of the statistical tests
+|  :param df: dataframe to be processed
+|  :param t_test_dict:
+|  :return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.run_1_V_1_stat_analysis">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">run_1_V_1_stat_analysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">celltypes_to_compare</span></em>, <em class="sig-param"><span class="n">cols_to_analyse</span></em>, <em class="sig-param"><span class="n">aggregation_level</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#run_1_V_1_stat_analysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.run_1_V_1_stat_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the 1V1 test for each combination of cell types/feature combination.
+|  :param df: dataframe to be processed
+|  :param celltypes_to_compare:
+|  :param cols_to_analyse:
+|  :param aggregation_level:
+|  :return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.run_stat_test">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">run_stat_test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">stat_test_dict</span></em>, <em class="sig-param"><span class="n">test_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#run_stat_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.run_stat_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs t-test for each cat of cell.
+|  :param df: Data to test
+|  :param t_test_dict: parameters
+|  :return:  Dataframe with t test for each selected feature</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.safely_get_value">
+<code class="sig-prename descclassname">bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.</code><code class="sig-name descname">safely_get_value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/statistical_analysis/statistical_analysis_utils.html#safely_get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.safely_get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>extract values from the nsmallest features
+|  :param x:
+|  :param i:
+|  :return:</p>
 </dd></dl>
 
 </section>

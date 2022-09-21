@@ -1,12 +1,24 @@
 import dash
-import dash_core_components as dcc
+from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
+import yaml
+
 
 # Data from U.S. Congress, Joint Economic Committee, Social Capital Project.
 df = pd.read_csv("data/03_primary/cells_reformated.csv")
+
+with open("conf/base/viz_parameters.yml") as file:
+    conf = yaml.safe_load(file)
+
+drop_list = conf["cols_to_drop"]
+
+for marker in conf["drop_markers"]:
+    drop_list.extend([t for t in df.columns if marker in t])
+
+df.drop(columns=drop_list, inplace=True)
 
 app = dash.Dash(__name__)
 
@@ -34,12 +46,12 @@ app.layout = html.Div(
         dcc.Dropdown(
             id="x_feature",
             options=[{"label": s, "value": s} for s in df.columns],
-            value="apwaveform_AP_mean_stim_180",
+            value="apwaveform_first_AHP_duration_stim_180",
         ),
         dcc.Dropdown(
             id="y_feature",
             options=[{"label": s, "value": s} for s in df.columns],
-            value="apwaveform_AP_mean_stim_180",
+            value=",apwaveform_first_AHP_duration_stim_180",
         ),
         dcc.Checklist(
             options=["FS", "DA_type", "IN", "PC", "Others", "Amygdala"],
@@ -62,7 +74,10 @@ app.layout = html.Div(
     Input(component_id="filter", component_property="value"),
 )
 def update_graph(box_vs_scatter, x_feature, y_feature, color, filter):
-    df_input = df.loc[df["cell_group_in_pc"].isin(filter)]
+    df_input = df.loc[df["cell_group_in_pc"].isin(filter)].copy()
+    df_input = df_input.loc[df_input[x_feature] != 0]
+    df_input = df_input.loc[df_input[x_feature] != -1500]
+
     if box_vs_scatter == "box plot":
 
         fig = px.box(

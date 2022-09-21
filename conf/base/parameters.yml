@@ -1,6 +1,7 @@
-mat_file_path: 'C:\BBP\ecodeanalysis\data\01_raw\matData_2022-05-30'
+
+mat_file_path: 'data\01_raw\matData_2022-05-30'
 test_file_name: 'aCell202_1.mat'
-test_save: 'C:\BBP\ecodeanalysis\data\02_intermediate\test.csv'
+test_save: 'data\02_intermediate\test.csv'
 
 repetitions_column: 'repetition'
 protocol_name: 'protocol_name'
@@ -12,15 +13,15 @@ columns:
   cell_type_column: 'cellType'
 
 analysis:
-  savepath: 'C:\BBP\ecodeanalysis\data\031_raw_data_analysis\html_files'
+  savepath: 'data\031_raw_data_analysis\html_files'
   savefile_type: "celltype_sep"
   savefile_in_pc: "in_pc_sep"
   stim_groups_dict:
-    apwaveform: [60, 100, 140, 180, 220]
+    apwaveform: [100, 140, 180, 220] #[60, 100, 140, 180, 220]
     idrest: [100, 125, 150, 175, 200, 225, 250, 275, 300]
 
 statistical_analysis_dict:
-  savepath: 'C:\BBP\ecodeanalysis\data\04_statistical_analysis'
+  savepath: 'data\04_statistical_analysis'
   class_features: 'cellType'
   run_t_test: True
   run_mann_whitney: True
@@ -29,6 +30,7 @@ statistical_analysis_dict:
   p_min: 0.05
   p_max: 0.8
   filler_value: 0.5
+  n_smallest: 5
 
 
   boxplot_dict:
@@ -37,7 +39,7 @@ statistical_analysis_dict:
 
   t_test_dict:
     features_markers: ['mean', 'stdev', 'first', 'second', 'frequency', 'vHold' ]
-    report_save_path: 'C:\BBP\ecodeanalysis\data\04_statistical_analysis'
+    report_save_path: 'data\04_statistical_analysis'
     graph_folder: 't_test_heatmaps'
     t_test_report_name: 't_test_report'
     aggregartion_level: 'cellType'
@@ -48,7 +50,7 @@ statistical_analysis_dict:
 
   mann_whitney_dict:
     features_markers: [ 'mean', 'stdev', 'first', 'second', 'frequency', 'vHold' ]
-    report_save_path: 'C:\BBP\ecodeanalysis\data\04_statistical_analysis'
+    report_save_path: 'data\04_statistical_analysis'
     graph_folder: 'mann_whitney_heatmaps'
     t_test_report_name: 'mann_whitney_report'
     aggregartion_level: 'cellType'
@@ -59,52 +61,42 @@ statistical_analysis_dict:
 
 reports:
   report_02_intermediate:
-    file_writing_path: 'C:\BBP\ecodeanalysis\data\08_reporting\report_02_intermediate\pdf_files'
-    report_writing_path: 'C:\BBP\ecodeanalysis\data\08_reporting\report_02_intermediate\report_02_intermediate.pdf'
+    file_writing_path: 'data\08_reporting\report_02_intermediate\pdf_files'
+    report_writing_path: 'data\08_reporting\report_02_intermediate\report_02_intermediate.pdf'
     treshold_mult: 8
 
   report_03_primary:
-    file_writing_path: 'C:\BBP\ecodeanalysis\data\08_reporting\report_03_primary\pdf_files'
-    report_writing_path: 'C:\BBP\ecodeanalysis\data\08_reporting\report_03_primary\report_03_primary.pdf'
+    file_writing_path: 'data\08_reporting\report_03_primary\pdf_files'
+    report_writing_path: 'data\08_reporting\report_03_primary\report_03_primary.pdf'
     treshold_mult: 6
 
 reformatting_params:
   treshold_tau: 60
   features_w_no_peaks: [
 
-      'apwaveform_AP_mean_stim_60',
-      'apwaveform_AP_stdev_stim_60',
-      'apwaveform_first_AP_voltage_stim_60',
-      'apwaveform_first_ISI_stim_60',
+      #'apwaveform_first_AP_begin_voltage_stim_60',
+      #'apwaveform_first_ISI_stim_60',
 
-      'apwaveform_second_AP_voltage_stim_60',
-      'apwaveform_second_ISI_stim_60',
+      #'apwaveform_second_AP_begin_voltage_stim_60',
+      #'apwaveform_second_ISI_stim_60',
 
-      'apwaveform_AP_mean_stim_100',
-      'apwaveform_AP_stdev_stim_100',
-      'apwaveform_first_AP_voltage_stim_100',
-      'apwaveform_first_ISI_stim_100',
-      'apwaveform_second_AP_voltage_stim_100',
-      'apwaveform_second_ISI_stim_100',
+      'apwaveform_first_AP_begin_voltage_stim_100',
+     # 'apwaveform_first_ISI_stim_100',
+      'apwaveform_second_AP_begin_voltage_stim_100',
+      #'apwaveform_second_ISI_stim_100',
 
-      'idrest_AP_mean_stim_50',
-      'idrest_AP_stdev_stim_50',
-      'idrest_first_AP_voltage_stim_50',
-      'idrest_first_ISI_stim_50',
-      'idrest_second_AP_voltage_stim_50',
-      'idrest_second_ISI_stim_50',
-      'idrest_AP_mean_stim_75',
-      'idrest_AP_stdev_stim_75',
-      'idrest_first_AP_voltage_stim_75',
-      'idrest_first_ISI_stim_75',
-      'idrest_second_AP_voltage_stim_75',
-      'idrest_second_ISI_stim_75',
-      'idrest_AP_mean_stim_100',
-      'idrest_AP_stdev_stim_100',
-      'idrest_first_AP_voltage_stim_100',
-      'idrest_first_ISI_stim_100',
-      'idrest_second_AP_voltage_stim_100',
-      'idrest_second_ISI_stim_100',
+      #'idrest_first_AP_begin_voltage_stim_50',
+      #'idrest_first_ISI_stim_50',
+      #'idrest_second_AP_begin_voltage_stim_50',
+      #'idrest_second_ISI_stim_50',
+      #'idrest_first_AP_begin_voltage_stim_75',
+      #'idrest_first_ISI_stim_75',
+      #'idrest_second_AP_begin_voltage_stim_75',
+      #'idrest_second_ISI_stim_75',
+      #'idrest_first_AP_begin_voltage_stim_100',
+      #'idrest_first_ISI_stim_100',
+      #'idrest_second_AP_begin_voltage_stim_100',
+      #'idrest_second_ISI_stim_100',
   ]
   group_mapping_params:
     group_mapping_dict_type: {
@@ -169,179 +161,626 @@ cells_list:
   status_column: ' Status'
   id_column: 'CellID'
 
-apwaveform_dict:
-  protocol_tag: 'APWaveform'
-  protocol_id: 'protocol_name'
-  repetitions_column: 'repetition'
-  stim_treshold: 100
-  stim_col: 'stim'
-  spike_col: 'spikecount'
+features_extraction_dict:
+  poscheops_dict:
+    protocol_tag: 'PosCheops'
+    protocol_marker: 'poscheops_'
+    pivot: True
 
 
-  pivot_dict:
-    index_columns: ['stim', 'protocol_name', 'stim_start', 'stim_end']
-    pivot_index: ['protocol_name', 'stim_start', 'stim_end']
-    pivot_columns: 'stim'
+    cheops_cols: ['cur_for_depol_AP1',
+'time_for_depol_AP1',
+'volt_for_depol_AP1',
+'AHP_for_depol_AP1',
+'volt_for_hyperpol_APlast',
+'AHP_for_hyperpol_APlast',
 
-  trace_level:
-    stimulation_column: 'stim'
-    stimulations_to_keep: [60, 100, 140, 180, 220]
-    trace_level_columns: [ 'ids',
-                              'stim',
-                              'stim_actual',
-                              'vHold',
-                              'spikecount',
-                              'peak_time',
-                              'peak_voltage',
-                              'ISI_values',
-                              'min_AHP_indices',
-                              'min_AHP_time',
-                              'min_AHP_voltage',
-                              'AP_begin_voltage',
-                              'AP_begin_time',
-                              'AP_amplitude',
-                              'AP_half_width',
-                              'AP_width',
-                              'AP_rise_time',
-                              'AP_fall_time',
-                              'time_to_AP_peak',
-                              'AHP_duration',
-                              'AHP_fall_tau',
-                              #'AHP_fall_A',
-                              #'AHP_rise_m',
-                              #'AHP_rise_c',
-                            ]
-  preprocessing_columns: [
-                          'vHold',
-                          'stim_start',
-                          'stim_end',
-                          'spikecount',
-                          'AP_begin_voltage',
-                          'peak_time',
-                          'peak_voltage',
-                          'AHP_fall_tau',
-                          'ISI_values',
-                          'stim', 'protocol_name'
-                          ]
-
-  double_extract_features: ['vHold', 'stim_start', 'stim_end', 'spikecount']
-  single_extract_features: ['AP_begin_voltage','peak_time','peak_voltage','AHP_fall_tau','ISI_values']
-
-  freq_dict:
-    stim_lenght: 'stim_lenght'
-    stim_start: 'stim_start'
-    stim_end: 'stim_end'
-    peak_frequency : 'peak_frequency'
-    spikecount : 'spikecount'
-  ap_potential:
-    AP_begin_voltage: 'AP_begin_voltage'
-    min_list_size: 2
-    AP_mean: 'AP_mean'
-    AP_stdev: 'AP_stdev'
-    AP_mean_wo_first: 'AP_mean_wo_first'
-    AP_stdev_wo_first: 'AP_stdev_wo_first'
-
-    first_AP_voltage: 'first_AP_voltage'
-    second_AP_voltage: 'second_AP_voltage'
-  ISI_values:
-    ISI_values: "ISI_values"
-    first_ISI: "first_ISI"
-    second_ISI: "second_ISI"
-    min_list_size: 2
-  ahp_values:
-    tau_mean: 'tau_mean'
-    tau_stdev: 'tau_stdev'
-    ahp_fall_tau: 'AHP_fall_tau'
-    first_fall_tau: 'first_fall_tau'
-    second_fall_tau: 'second_fall_tau'
-  out_features_base: ['vHold', 'spikecount']
-
-
-idrest_dict:
-  protocol_tag: 'IDRest'
-  protocol_id: 'protocol_name'
-  repetitions_column: 'repetition'
-  stim_treshold: 100
-  stim_col: 'stim'
-  spike_col: 'spikecount'
-
-
-  freq_dict:
-    stim_lenght: 'stim_lenght'
-    stim_start: 'stim_start'
-    stim_end: 'stim_end'
-    peak_frequency: 'peak_frequency'
-    spikecount: 'spikecount'
-
-  ap_potential:
-    AP_begin_voltage: 'AP_begin_voltage'
-    min_list_size: 2
-    AP_mean: 'AP_mean'
-    AP_stdev: 'AP_stdev'
-    AP_mean_wo_first: 'AP_mean_wo_first'
-    AP_stdev_wo_first: 'AP_stdev_wo_first'
-
-    first_AP_voltage: 'first_AP_voltage'
-    second_AP_voltage: 'second_AP_voltage'
-
-  ISI_values:
-    ISI_values: "ISI_values"
-    first_ISI: "first_ISI"
-    second_ISI: "second_ISI"
-    min_list_size: 2
-
-  out_features_base: [ 'vHold', 'spikecount', 'ISI1_time_vs_I_m', 'ISI1_time_vs_I_c',
-    'AP1_time_vs_I_m', 'AP1_time_vs_I_c']
-
-  preprocessing_columns: [
-    'vHold',
-    'stim_start',
-    'stim_end',
-    'spikecount',
-    'AP_begin_voltage',
-    'peak_time',
-    'peak_voltage',
-    'ISI_values',
-    'stim', 'protocol_name', 'ISI1_time_vs_I_m', 'ISI1_time_vs_I_c',
-    'AP1_time_vs_I_m', 'AP1_time_vs_I_c'
-  ]
-
-  trace_level:
-    stimulation_column: 'stim'
-    stimulations_to_keep: [ 50,  75, 100, 125, 150, 175, 200, 225, 250, 275, 300]
-    trace_level_columns: [    'ids',
-                  'stim',
-                  'stim_actual',
-                  'vHold',
-                  'spikecount',
-                  'peak_time',
-                  'peak_voltage',
-                  'ISI_values',
-                  'min_AHP_indices',
-                  'min_AHP_time',
-                  'min_AHP_voltage',
-                  'AP_begin_voltage',
-                  'AP_begin_time',
-                  'AP_amplitude',
-                  'initial_accommodation',
-                  'steady_state_accommodation',
-                  'intermediate_accommodation',
-                  'last_accommodation',
-                  'ISI_CV',
-                  'adaptation_index',
     ]
-  double_extract_features: [ 'vHold', 'stim_start', 'stim_end', 'spikecount' ]
-  single_extract_features: [ 'AP_begin_voltage','peak_time','peak_voltage','ISI_values' ]
-  pivot_dict:
-    index_columns: ['stim', 'protocol_name', 'stim_start', 'stim_end']
-    pivot_index: ['protocol_name', 'stim_start', 'stim_end']
-    pivot_columns: 'stim'
+
+
+  negcheops_dict:
+    protocol_tag: 'NegCheops'
+    protocol_marker: 'negcheops_'
+    pivot: True
+
+
+    cheops_cols: [ 'm_for_hyperpol_voltage',
+        'volt_for_hyperpol_min',
+        'm_for_depol_voltage',
+        'volt_for_depol_min',
+
+              ]
+
+
+
+  hyperdepol_dict:
+    protocol_tag: 'HyperDePol'
+    protocol_marker: 'hyperdepol_'
+    protocol_id: 'protocol_name'
+    repetitions_column: 'repetition'
+    compute_freq: True
+    stim_treshold: 100
+    stim_col: 'stim'
+    recompute_spikecount: False
+    spike_col: 'spikecount'
+
+    preprocessing_features:
+      [ 'stim', 'stim_start', 'stim_end', 'spikecount' ]
+
+    pivot_dict:
+
+      pivot_columns: 'stim'
+
+
+    trace_level:
+      stimulation_column: 'stim'
+      stimulations_to_keep: [ -40, -80, -120, -160 ]
+      fixed_value_columns: [ 'min_cur_for_discharge',
+                             ]
+
+
+
+    double_extract_features: [ 'vHold', 'stim_start', 'stim_end', 'spikecount' , 'time_to_hyperpolarization_peak',
+                             'input_resistance_for_peak',
+                             'input_resistance_for_steady_state',
+                             'max_sag_hyper',
+                             'sag_steady_state',
+                             'max_sag_from_steady_state',
+                             'hyper_sag_tau',
+                             'hyper_sag_recovery_tau',
+                             'threshold_current',  ]
+    single_extract_features: [ ]
+
+    freq_dict:
+      stim_lenght: 'stim_lenght'
+      stim_start: 'stim_start'
+      stim_end: 'stim_end'
+      peak_frequency: 'peak_frequency'
+      spikecount: 'spikecount'
+    peak_values:
+      AHP_duration:
+        feature_base_name: 'AHP_duration'
+        feature_nick_name: 'AHP_duration'
+      time_to_AP_peak:
+        feature_base_name: 'time_to_AP_peak'
+        feature_nick_name: 'time_to_AP_peak'
+      AP_half_width:
+        feature_base_name: 'AP_half_width'
+        feature_nick_name: 'AP_half_width'
+      AP_fall_time:
+        feature_base_name: 'AP_fall_time'
+        feature_nick_name: 'AP_fall_time'
+      AP_rise_time:
+        feature_base_name: 'AP_rise_time'
+        feature_nick_name: 'AP_rise_time'
+      AP_width:
+        feature_base_name: 'AP_width'
+        feature_nick_name: 'AP_width'
+      peak_voltage:
+        feature_base_name: 'peak_voltage'
+        feature_nick_name: 'peak_voltage'
+      min_AHP_voltage:
+        feature_base_name: 'min_AHP_voltage'
+        feature_nick_name: 'min_AHP_voltage'
+      AP_begin_voltage:
+        feature_base_name: 'AP_begin_voltage'
+        feature_nick_name: 'AP_begin_voltage'
+      AP_amplitude:
+        feature_base_name: 'AP_amplitude'
+        feature_nick_name: 'AP_amplitude'
+
+    out_features_base: [ 'vHold', 'spikecount' , 'time_to_hyperpolarization_peak',
+                             'input_resistance_for_peak',
+                             'input_resistance_for_steady_state',
+                             'max_sag_hyper',
+                             'sag_steady_state',
+                             'max_sag_from_steady_state',
+                             'hyper_sag_tau',
+                             'hyper_sag_recovery_tau',
+                             'threshold_current', ]
+
+  idthres_dict:
+    protocol_tag: 'IDThres'
+    protocol_marker: 'idthres_'
+    protocol_id: 'protocol_name'
+    repetitions_column: 'repetition'
+    compute_freq: True
+    stim_treshold: 100
+    stim_col: 'stim'
+    recompute_spikecount: False
+    spike_col: 'spikecount'
+
+    preprocessing_features:
+      [ 'stim', 'stim_start', 'stim_end', 'spikecount' ]
+
+    pivot_dict:
+
+      pivot_columns: 'stim'
+
+
+    trace_level:
+      stimulation_column: 'stim'
+      stimulations_to_keep: [ 102, 106, 110, 114, 118, 122, 126, 130 ]
+      fixed_value_columns: [ 'min_cur_to_discharge',
+                                      'threshold_voltage',
+                                      'min_AP_frequency',
+                                      'max_AP_frequency',
+                                      'frequency_vs_I_m',
+                                      'AP1_time_vs_I_m',
+                                      'AP2_time_vs_I_m',
+                                      'AP3_time_vs_I_m',
+                                      'ISI1_time_vs_I_m',
+                                      'ISI2_time_vs_I_m',
+                                      'ISI3_time_vs_I_m',
+                                      'ISI_CV',
+                                      'Rheobase', ]
+
+
+
+    double_extract_features: [ 'vHold', 'stim_start', 'stim_end', 'spikecount' ]
+    single_extract_features: [ ]
+
+    freq_dict:
+      stim_lenght: 'stim_lenght'
+      stim_start: 'stim_start'
+      stim_end: 'stim_end'
+      peak_frequency: 'peak_frequency'
+      spikecount: 'spikecount'
+
+    peak_values:
+      peak_voltage:
+        feature_base_name: 'peak_voltage'
+        feature_nick_name: 'peak_voltage'
+      min_AHP_voltage:
+        feature_base_name: 'min_AHP_voltage'
+        feature_nick_name: 'min_AHP_voltage'
+      AP_begin_voltage:
+        feature_base_name: 'AP_begin_voltage'
+        feature_nick_name: 'AP_begin_voltage'
+      AP_amplitude:
+        feature_base_name: 'AP_amplitude'
+        feature_nick_name: 'AP_amplitude'
+
+    out_features_base: [ 'vHold', 'spikecount' ]
+
+  apwaveform_dict:
+    protocol_tag: 'APWaveform'
+    protocol_marker: 'apwaveform_'
+    protocol_id: 'protocol_name'
+    repetitions_column: 'repetition'
+    compute_freq: True
+    stim_treshold: 100
+    stim_col: 'stim'
+    recompute_spikecount: False
+    spike_col: 'spikecount'
+
+    preprocessing_features:
+       ['stim', 'stim_start', 'stim_end', 'spikecount']
+
+
+    pivot_dict:
+
+      pivot_columns: 'stim'
+
+    trace_level:
+      stimulation_column: 'stim'
+      stimulations_to_keep: [60, 100, 140, 180, 220]
+      fixed_value_columns: ['min_cur_for_discharge']
+
+
+    double_extract_features: ['vHold', 'stim_start', 'stim_end', 'spikecount']
+    single_extract_features: []
+
+    freq_dict:
+      stim_lenght: 'stim_lenght'
+      stim_start: 'stim_start'
+      stim_end: 'stim_end'
+      peak_frequency : 'peak_frequency'
+      spikecount : 'spikecount'
+
+    peak_values:
+      peak_voltage:
+        feature_base_name: 'peak_voltage'
+        feature_nick_name: 'peak_voltage'
+      AP_half_width:
+        feature_base_name: 'AP_half_width'
+        feature_nick_name: 'AP_half_width'
+      AP_width:
+        feature_base_name: 'AP_width'
+        feature_nick_name: 'AP_width'
+      AP_amplitude:
+        feature_base_name: 'AP_amplitude'
+        feature_nick_name: 'AP_amplitude'
+      AP_rise_time:
+        feature_base_name: 'AP_rise_time'
+        feature_nick_name: 'AP_rise_time'
+      AP_fall_time:
+        feature_base_name: 'AP_fall_time'
+        feature_nick_name: 'AP_fall_time'
+      time_to_AP_peak:
+        feature_base_name: 'time_to_AP_peak'
+        feature_nick_name: 'time_to_AP_peak'
+      AP_begin_voltage:
+        feature_base_name: 'AP_begin_voltage'
+        feature_nick_name: 'AP_begin_voltage'
+      ISI_values:
+        feature_base_name: 'ISI_values'
+        feature_nick_name: 'ISI_values'
+      AHP_fall_tau:
+        feature_base_name: 'AHP_fall_tau'
+        feature_nick_name: 'AHP_fall_tau'
+      min_AHP_voltage:
+        feature_base_name: 'min_AHP_voltage'
+        feature_nick_name: 'min_AHP_voltage'
+      AHP_rise_m:
+        feature_base_name: 'AHP_rise_m'
+        feature_nick_name: 'AHP_rise_m'
+      AHP_duration:
+        feature_base_name: 'AHP_duration'
+        feature_nick_name: 'AHP_duration'
+
+    out_features_base: ['vHold', 'spikecount']
+
+  dehyperpol_dict:
+    protocol_tag: 'DeHyperPol'
+    protocol_marker: 'dehyperpol_'
+    protocol_id: 'protocol_name'
+    repetitions_column: 'repetition'
+    compute_freq: True
+    stim_treshold: 100
+    stim_col: 'stim'
+    recompute_spikecount: False
+    spike_col: 'spikecount'
+
+    preprocessing_features:
+       ['stim', 'stim_start', 'stim_end', 'spikecount']
+
+
+
+    pivot_dict:
+      pivot_columns: 'stim'
+
+    trace_level:
+      stimulation_column: 'stim'
+      stimulations_to_keep: [ -40, -80, -120, -160 ]
+      fixed_value_columns: [ 'min_cur_for_discharge' ]
+
+
+
+    double_extract_features: [     'vHold',
+                    'input_resistance_for_peak',
+                    'input_resistance_for_steady_state',
+                    'max_sag_hyper',
+                    'sag_steady_state',
+                    'max_sag_from_steady_state',
+                    'hyper_sag_tau',
+                    'hyper_sag_recovery_tau',
+                    'max_depolarization',
+                                   'spikecount',
+                    'max_depolarization_from_steady_state',
+                    'max_depolarization_tau',
+                    'time_to_hyperpolarization_peak',]
+
+
+    single_extract_features: [ ]
+
+    freq_dict:
+      stim_lenght: 'stim_lenght'
+      stim_start: 'stim_start'
+      stim_end: 'stim_end'
+      peak_frequency: 'peak_frequency'
+      spikecount: 'spikecount'
+
+
+    peak_values:
+      peak_voltage:
+        feature_base_name: 'peak_voltage'
+        feature_nick_name: 'peak_voltage'
+      AP_amplitude:
+        feature_base_name: 'AP_amplitude'
+        feature_nick_name: 'AP_amplitude'
+      AP_half_width:
+        feature_base_name: 'AP_half_width'
+        feature_nick_name: 'AP_half_width'
+      AP_width:
+        feature_base_name: 'AP_width'
+        feature_nick_name: 'AP_width'
+      AP_rise_time:
+        feature_base_name: 'AP_rise_time'
+        feature_nick_name: 'AP_rise_time'
+      time_to_AP_peak:
+        feature_base_name: 'time_to_AP_peak'
+        feature_nick_name: 'time_to_AP_peak'
+      AP_begin_voltage:
+        feature_base_name: 'AP_begin_voltage'
+        feature_nick_name: 'AP_begin_voltage'
+      AHP_duration:
+        feature_base_name: 'AHP_duration'
+        feature_nick_name: 'AHP_duration'
+      ISI_values:
+        feature_base_name: 'ISI_values'
+        feature_nick_name: 'ISI_values'
+      min_AHP_voltage:
+        feature_base_name: 'min_AHP_voltage'
+        feature_nick_name: 'min_AHP_voltage'
+
+    out_features_base: [ 'vHold', 'spikecount',
+                         'input_resistance_for_peak',
+                         'input_resistance_for_steady_state',
+                         'max_sag_hyper',
+                         'sag_steady_state',
+                         'max_sag_from_steady_state',
+                         'hyper_sag_tau',
+                         'hyper_sag_recovery_tau',
+                         'max_depolarization',
+                         'max_depolarization_from_steady_state',
+                         'max_depolarization_tau',
+                         'time_to_hyperpolarization_peak',]
+
+  iv_dict:
+    protocol_tag: 'IV'
+    protocol_marker: 'iv_'
+    protocol_id: 'protocol_name'
+    repetitions_column: 'repetition'
+    compute_freq: False
+    stim_treshold: 100
+    stim_col: 'stim'
+    recompute_spikecount: True # can be turned to True
+    recompute_col: 'peak_value'
+    spike_col: 'spikecount'
+
+    preprocessing_features:
+       ['stim',  'spikecount']
+
+
+
+    pivot_dict:
+      pivot_columns: 'stim'
+
+    trace_level:
+      stimulation_column: 'stim'
+      stimulations_to_keep: [ -40, -80, -120, -160 ]
+      fixed_value_columns: [ 'RI_for_peak',
+          'RI_for_steady_state',
+          'RI_for_resistance',
+          'ttp_vs_I_m',
+
+          # 'IV_peak_m', features are missing for multiple cells (266_1, 268_1,...)
+          # 'IV_steady_m', TODO: create feature corrector to integrate them
+      ]
+
+
+
+    double_extract_features: [    'vHold',
+]
+
+
+    single_extract_features: [ ]
+
+    freq_dict:
+      stim_lenght: 'stim_lenght'
+      stim_start: 'stim_start'
+      stim_end: 'stim_end'
+      peak_frequency: 'peak_frequency'
+      spikecount: 'spikecount'
+
+    peak_values:
+      Tau_rise:
+        feature_base_name: 'Tau_rise'
+        feature_nick_name: 'Tau_rise'
+      Tau_decay:
+        feature_base_name: 'Tau_decay'
+        feature_nick_name: 'Tau_decay'
+      peak_value:
+        feature_base_name: 'peak_value'
+        feature_nick_name: 'peak_value'
+      steady_state_value:
+        feature_base_name: 'steady_state_value'
+        feature_nick_name: 'steady_state_value'
+      input_resistance_from_peak:
+        feature_base_name: 'input_resistance_from_peak'
+        feature_nick_name: 'input_resistance_from_peak'
+      input_resistance_from_steady_state:
+        feature_base_name: 'input_resistance_from_steady_state'
+        feature_nick_name: 'input_resistance_from_steady_state'
+      max_sag:
+        feature_base_name: 'max_sag'
+        feature_nick_name: 'max_sag'
+
+    out_features_base: [ ]
+
+  sahp_dict:
+    protocol_tag: 'sAHP'
+    protocol_marker: 'sahp_'
+
+    protocol_id: 'protocol_name'
+    repetitions_column: 'repetition'
+    compute_freq: True
+    stim_treshold: 100
+    stim_col: 'stim'
+    recompute_spikecount: False
+    spike_col: 'spikecount'
+
+    preprocessing_features:
+       ['stim', 'stim_start', 'stim_end', 'spikecount']
+
+
+
+    pivot_dict:
+
+      pivot_columns: 'stim'
+
+
+    trace_level:
+      stimulation_column: 'stim'
+      stimulations_to_keep: [150, 200, 250, 300]
+      fixed_value_columns: ['min_cur_for_discharge', 'sAHP_max_vs_I_m',
+                          'sAHP_max_time_vs_I_m',
+                          'sAHP_max_vs_freq_m',
+                          'sAHP_max_mean',]
+
+
+
+    double_extract_features: ['vHold', 'stim_start', 'stim_end', 'spikecount']
+    single_extract_features: []
+
+    freq_dict:
+      stim_lenght: 'stim_lenght'
+      stim_start: 'stim_start'
+      stim_end: 'stim_end'
+      peak_frequency : 'peak_frequency'
+      spikecount : 'spikecount'
+
+    peak_values:
+      min_AHP_voltage:
+        feature_base_name: 'min_AHP_voltage'
+        feature_nick_name: 'min_AHP_voltage'
+      sAHP_max:
+        feature_base_name: 'sAHP_max'
+        feature_nick_name: 'sAHP_max'
+      sAHP_max_time:
+        feature_base_name: 'sAHP_max_time'
+        feature_nick_name: 'sAHP_max_time'
+      peak_voltage:
+        feature_base_name: 'peak_voltage'
+        feature_nick_name: 'peak_voltage'
+      sAHP_steady_state:
+        feature_base_name: 'sAHP_steady_state'
+        feature_nick_name: 'sAHP_steady_state'
+      sAHP_maxV:
+        feature_base_name: 'sAHP_maxV'
+        feature_nick_name: 'sAHP_maxV'
+      sAHP_recovery_tau:
+        feature_base_name: 'sAHP_recovery_tau'
+        feature_nick_name: 'sAHP_recovery_tau'
+      AP_half_width:
+        feature_base_name: 'AP_half_width'
+        feature_nick_name: 'AP_half_width'
+      AP_width:
+        feature_base_name: 'AP_width'
+        feature_nick_name: 'AP_width'
+      AP_amplitude:
+        feature_base_name: 'AP_amplitude'
+        feature_nick_name: 'AP_amplitude'
+      AP_rise_time:
+        feature_base_name: 'AP_rise_time'
+        feature_nick_name: 'AP_rise_time'
+      AP_fall_time:
+        feature_base_name: 'AP_fall_time'
+        feature_nick_name: 'AP_fall_time'
+      time_to_AP_peak:
+        feature_base_name: 'time_to_AP_peak'
+        feature_nick_name: 'time_to_AP_peak'
+      AP_begin_voltage:
+        feature_base_name: 'AP_begin_voltage'
+        feature_nick_name: 'AP_begin_voltage'
+      ISI_values:
+        feature_base_name: 'ISI_values'
+        feature_nick_name: 'ISI_values'
+      AHP_duration:
+        feature_base_name: 'AHP_duration'
+        feature_nick_name: 'AHP_duration'
+
+    out_features_base: ['vHold', 'spikecount']
+
+  idrest_dict:
+    protocol_tag: 'IDRest'
+    protocol_marker: 'idrest_'
+
+    protocol_id: 'protocol_name'
+    repetitions_column: 'repetition'
+    compute_freq: True
+    stim_treshold: 100
+    stim_col: 'stim'
+    recompute_spikecount: False
+    spike_col: 'spikecount'
+
+    preprocessing_features:
+       ['stim', 'stim_start', 'stim_end', 'spikecount']
+
+    freq_dict:
+      stim_lenght: 'stim_lenght'
+      stim_start: 'stim_start'
+      stim_end: 'stim_end'
+      peak_frequency: 'peak_frequency'
+      spikecount: 'spikecount'
+
+
+    peak_values:
+      peak_voltage:
+        feature_base_name: 'peak_voltage'
+        feature_nick_name: 'peak_voltage'
+      last_accommodation:
+        feature_base_name: 'last_accommodation'
+        feature_nick_name: 'last_accommodation'
+      intermediate_accommodation:
+        feature_base_name: 'intermediate_accommodation'
+        feature_nick_name: 'intermediate_accommodation'
+      AP_amplitude:
+        feature_base_name: 'AP_amplitude'
+        feature_nick_name: 'AP_amplitude'
+      AP_begin_voltage:
+        feature_base_name: 'AP_begin_voltage'
+        feature_nick_name: 'AP_begin_voltage'
+      adaptation_index:
+        feature_base_name: 'adaptation_index'
+        feature_nick_name: 'adaptation_index'
+      steady_state_accommodation:
+        feature_base_name: 'steady_state_accommodation'
+        feature_nick_name: 'steady_state_accommodation'
+      initial_accommodation:
+        feature_base_name: 'initial_accommodation'
+        feature_nick_name: 'initial_accommodation'
+      ISI_CV:
+        feature_base_name: 'ISI_CV'
+        feature_nick_name: 'ISI_CV'
+      ISI_values:
+        feature_base_name: 'ISI_values'
+        feature_nick_name: 'ISI_values'
+      min_AHP_voltage:
+        feature_base_name: 'min_AHP_voltage'
+        feature_nick_name: 'min_AHP_voltage'
+
+
+    out_features_base: [ 'vHold', 'spikecount']
+
+
+
+    trace_level:
+      stimulation_column: 'stim'
+      stimulations_to_keep: [ 50,  75, 100, 125, 150, 175, 200, 225, 250, 275, 300]
+      fixed_value_columns: ['threshold_voltage',
+                            'frequency_vs_I_m',
+                            'AP1_time_vs_I_m',
+                            'AP2_time_vs_I_m',
+                            'AP3_time_vs_I_m',
+                            'initial_accommodation_mean',
+                            'last_accommodation_mean',
+                            'steady_state_accommodation_mean',
+                            'steady_state_accommodation_max',
+                            'intermediate_accommodation_mean',
+                            'ISI1_time_vs_I_m',
+                            'ISI2_time_vs_I_m',
+                            'ISI3_time_vs_I_m',
+      'min_cur_to_discharge', 'min_AP_frequency', 'max_AP_frequency']
+
+
+    double_extract_features: [ 'vHold', 'stim_start', 'stim_end', 'spikecount' ]
+    single_extract_features: [  ]
+    pivot_dict:
+
+      pivot_columns: 'stim'
+
+
 
 clustering_dict:
+  scaler_path: 'data/05_clustering/scaler/scaler.bin'
   data_prep:
-    clustering_markers: ['AP_mean', 'first_AP_voltage', 'first_ISI', 'first_fall_tau',
+    clustering_markers: ['AP_begin_voltage', 'first_AP_begin_voltage', 'first_ISI', 'first_fall_tau',
            'peak_frequency', 'tau_mean']
+    cols_to_ohe: ['cell_group_type', 'species']
     protocol_markers: ['apw', 'idrest']
+
   clustering_param:
     clustering_method: 'agglomerative' #kmean, k_minibatch_mean
     agg_method: 'ward'

@@ -93,7 +93,8 @@
               
             
             
-              <ul>
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">bbp_code_package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../bbp_code_package.html">bbp_code_package package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#subpackages">Subpackages</a><ul>
@@ -175,27 +176,27 @@
             
   <h1>Source code for bbp_code_package.nodes.reformatting.reform_utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
 
 <div class="viewcode-block" id="tau_cap"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.reformatting.html#bbp_code_package.nodes.reformatting.reform_utils.tau_cap">[docs]</a><span class="k">def</span> <span class="nf">tau_cap</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">treshold</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Limit the value of the tau columns to a specific treschold</span>
-<span class="sd">    :param df: Data to reformat</span>
-<span class="sd">    :param treshold: Max value of Tau column</span>
-<span class="sd">    :return: Reformated DataFrame</span>
+<span class="sd">    |  Limit the value of the tau columns to a specific treschold</span>
+<span class="sd">    |  :param df: Data to reformat</span>
+<span class="sd">    |  :param treshold: Max value of Tau column</span>
+<span class="sd">    |  :return:  Reformated DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tau_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;tau&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)]</span>
     <span class="n">df</span><span class="p">[</span><span class="n">tau_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">tau_cols</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">upper</span><span class="o">=</span><span class="n">treshold</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">df</span></div>
 
 
 <div class="viewcode-block" id="remove_features_w_no_peaks"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.reformatting.html#bbp_code_package.nodes.reformatting.reform_utils.remove_features_w_no_peaks">[docs]</a><span class="k">def</span> <span class="nf">remove_features_w_no_peaks</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">features_w_no_peaks</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Remove peak features at stimulations with limited peaks</span>
-<span class="sd">    :param df: datafram to correct</span>
-<span class="sd">    :param features_w_no_peaks: list of features to be removed</span>
-<span class="sd">    :return: df</span>
+<span class="sd">    |  Remove peak features at stimulations with limited peaks</span>
+<span class="sd">    |  :param df: datafram to correct</span>
+<span class="sd">    |  :param features_w_no_peaks: list of features to be removed</span>
+<span class="sd">    |  :return:  df without features</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">features_w_no_peaks</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -205,8 +206,8 @@
 
 <div class="viewcode-block" id="remove_rows_w_missing_protocols"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.reformatting.html#bbp_code_package.nodes.reformatting.reform_utils.remove_rows_w_missing_protocols">[docs]</a><span class="k">def</span> <span class="nf">remove_rows_w_missing_protocols</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Remove row (or cells) where one protocol is missing</span>
-<span class="sd">    :param df:datafram to correct</span>
+<span class="sd">    |  Remove row (or cells) where one protocol is missing</span>
+<span class="sd">    |  :param df:datafram to correct</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">protocols_availability_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;availability&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)]</span>
@@ -217,12 +218,12 @@
     <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="get_cell_group"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.reformatting.html#bbp_code_package.nodes.reformatting.reform_utils.get_cell_group">[docs]</a><span class="k">def</span> <span class="nf">get_cell_group</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<div class="viewcode-block" id="get_cell_group"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.reformatting.html#bbp_code_package.nodes.reformatting.reform_utils.get_cell_group">[docs]</a><span class="k">def</span> <span class="nf">get_cell_group</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Map cell type to cell group</span>
-<span class="sd">    :param df: datafram to correct</span>
-<span class="sd">    :param group_mapping_params: Mapping dict</span>
-<span class="sd">    :return: Df with new column of cell grou</span>
+<span class="sd">    |  Map cell type to cell group</span>
+<span class="sd">    |  :param df: datafram to correct</span>
+<span class="sd">    |  :param group_mapping_params: Mapping dict</span>
+<span class="sd">    |  :return:  Df with new column of cell grou</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">group_mapping_dict_type</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reformatting_params&quot;</span><span class="p">][</span><span class="s2">&quot;group_mapping_params&quot;</span><span class="p">][</span>
         <span class="s2">&quot;group_mapping_dict_type&quot;</span>

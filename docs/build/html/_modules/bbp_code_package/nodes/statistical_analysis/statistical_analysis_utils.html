@@ -93,7 +93,8 @@
               
             
             
-              <ul>
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">bbp_code_package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../bbp_code_package.html">bbp_code_package package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../bbp_code_package.html#subpackages">Subpackages</a><ul>
@@ -177,6 +178,130 @@
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">plotly</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ttest_ind</span><span class="p">,</span> <span class="n">mannwhitneyu</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">bbp_code_package.nodes.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+
+<div class="viewcode-block" id="get_stat_synthesis"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_stat_synthesis">[docs]</a><span class="k">def</span> <span class="nf">get_stat_synthesis</span><span class="p">(</span><span class="n">stat_sign_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">n_smallest</span><span class="p">,</span> <span class="n">drop_stdev</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts instigts fom the raw statistical analysis</span>
+<span class="sd">    |  :param stat_sign_df:</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">drop_stdev</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">stat_sign_df</span><span class="p">[</span><span class="s2">&quot;is_stdev&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stat_sign_df</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;stdev&quot;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">stat_sign_df</span> <span class="o">=</span> <span class="n">stat_sign_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">stat_sign_df</span><span class="p">[</span><span class="s2">&quot;is_stdev&quot;</span><span class="p">]]</span>
+
+    <span class="n">stat_synthesis_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cell_i</span> <span class="ow">in</span> <span class="n">stat_sign_df</span><span class="o">.</span><span class="n">cell_i</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">cell_j</span> <span class="ow">in</span> <span class="n">stat_sign_df</span><span class="o">.</span><span class="n">cell_j</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+            <span class="n">temp_df</span> <span class="o">=</span> <span class="n">stat_sign_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                <span class="p">(</span><span class="n">stat_sign_df</span><span class="o">.</span><span class="n">cell_i</span> <span class="o">==</span> <span class="n">cell_i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">stat_sign_df</span><span class="o">.</span><span class="n">cell_j</span> <span class="o">==</span> <span class="n">cell_j</span><span class="p">)</span>
+            <span class="p">][[</span><span class="s2">&quot;feature&quot;</span><span class="p">,</span> <span class="s2">&quot;p_value&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">stat_synthesis_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">cell_i</span><span class="p">,</span>
+                    <span class="n">cell_j</span><span class="p">,</span>
+                    <span class="n">temp_df</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;p_value&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_smallest</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+
+    <span class="n">stat_synthesis_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">stat_synthesis_list</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cell_i&quot;</span><span class="p">,</span> <span class="s2">&quot;cell_j&quot;</span><span class="p">,</span> <span class="s2">&quot;differenciators&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">stat_synthesis_df</span><span class="p">[</span><span class="s2">&quot;diff_simplified&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stat_synthesis_df</span><span class="p">[</span><span class="s2">&quot;differenciators&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_stim&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">stat_synthesis_df</span><span class="p">[</span><span class="s2">&quot;diff_simplified&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stat_synthesis_df</span><span class="p">[</span><span class="s2">&quot;diff_simplified&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Counter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_smallest</span><span class="p">):</span>
+        <span class="n">stat_synthesis_df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;diff_</span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stat_synthesis_df</span><span class="p">[</span><span class="s2">&quot;differenciators&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">safely_get_value</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">stat_synthesis_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;differenciators&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stat_synthesis_df</span></div>
+
+
+<div class="viewcode-block" id="safely_get_value"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.safely_get_value">[docs]</a><span class="k">def</span> <span class="nf">safely_get_value</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    extract values from the nsmallest features</span>
+<span class="sd">    |  :param x:</span>
+<span class="sd">    |  :param i:</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;alternative&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">NAN</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="run_1_V_1_stat_analysis"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.run_1_V_1_stat_analysis">[docs]</a><span class="k">def</span> <span class="nf">run_1_V_1_stat_analysis</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">celltypes_to_compare</span><span class="p">,</span> <span class="n">cols_to_analyse</span><span class="p">,</span> <span class="n">aggregation_level</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the 1V1 test for each combination of cell types/feature combination.</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param celltypes_to_compare:</span>
+<span class="sd">    |  :param cols_to_analyse:</span>
+<span class="sd">    |  :param aggregation_level:</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_celltype</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">celltypes_to_compare</span><span class="p">)</span>
+    <span class="n">feature_matrix_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">df_concat_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">cols_to_analyse</span><span class="p">:</span>
+
+        <span class="n">feature_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_celltype</span><span class="p">,</span> <span class="n">n_celltype</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_celltype</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_celltype</span><span class="p">):</span>
+                <span class="n">cell_i</span> <span class="o">=</span> <span class="n">celltypes_to_compare</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">cell_j</span> <span class="o">=</span> <span class="n">celltypes_to_compare</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">cell_i_df</span> <span class="o">=</span> <span class="n">filter_per_cell_type</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cell_i</span><span class="p">,</span> <span class="n">aggregation_level</span><span class="p">)[</span><span class="n">feature</span><span class="p">]</span>
+                <span class="n">cell_j_df</span> <span class="o">=</span> <span class="n">filter_per_cell_type</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cell_j</span><span class="p">,</span> <span class="n">aggregation_level</span><span class="p">)[</span><span class="n">feature</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">cell_i_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="n">cell_i_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+                    <span class="n">cell_j_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="n">cell_j_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pass&quot;</span><span class="p">)</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">cell_i_df</span><span class="p">,</span> <span class="n">cell_j_df</span><span class="p">,</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s2">&quot;omit&quot;</span><span class="p">)</span>
+                <span class="n">feature_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+                <span class="n">feature_array</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+                <span class="n">df_concat_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                    <span class="p">[[</span><span class="n">cell_i</span><span class="p">,</span> <span class="n">cell_j</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="p">[</span><span class="n">cell_j</span><span class="p">,</span> <span class="n">cell_i</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">p</span><span class="p">]]</span>
+                <span class="p">)</span>
+
+        <span class="n">feature_matrix_dict</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_array</span>
+    <span class="n">stat_sign_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">df_concat_list</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cell_i&quot;</span><span class="p">,</span> <span class="s2">&quot;cell_j&quot;</span><span class="p">,</span> <span class="s2">&quot;feature&quot;</span><span class="p">,</span> <span class="s2">&quot;p_value&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">stat_sign_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;cell_i&quot;</span><span class="p">,</span> <span class="s2">&quot;cell_j&quot;</span><span class="p">,</span> <span class="s2">&quot;p_value&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stat_sign_df</span></div>
+
+
+<div class="viewcode-block" id="filter_per_cell_type"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.filter_per_cell_type">[docs]</a><span class="k">def</span> <span class="nf">filter_per_cell_type</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">celltype</span><span class="p">,</span> <span class="n">aggregation_level</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param celltype:</span>
+<span class="sd">    |  :param aggregation_level:</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">aggregation_level</span><span class="p">]</span> <span class="o">==</span> <span class="n">celltype</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">filtered_df</span></div>
 
 
 <div class="viewcode-block" id="get_html_box_plot"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_html_box_plot">[docs]</a><span class="k">def</span> <span class="nf">get_html_box_plot</span><span class="p">(</span>
@@ -185,12 +310,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot scattermatrix HTML file over defined dict</span>
 
-<span class="sd">    :param df: data to plot</span>
-<span class="sd">    :param cols_to_analyse: columns to be analysed</span>
-<span class="sd">    :param colour_col: col used to group data</span>
-<span class="sd">    :param savepath: path to savefolder</span>
-<span class="sd">    :param savefile: Path to save sub-file</span>
-<span class="sd">    :return: Html Box plot of each of the cols_to_analyse, saved in the indicated folder</span>
+<span class="sd">    |  :param df: data to plot</span>
+<span class="sd">    |  :param cols_to_analyse: columns to be analysed</span>
+<span class="sd">    |  :param colour_col: col used to group data</span>
+<span class="sd">    |  :param savepath: path to savefolder</span>
+<span class="sd">    |  :param savefile: Path to save sub-file</span>
+<span class="sd">    |  :return:  Html Box plot of each of the cols_to_analyse, saved in the indicated folder</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">cols_to_analyse</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
@@ -214,15 +339,159 @@
 <div class="viewcode-block" id="get_cols_from_feat_markers"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_cols_from_feat_markers">[docs]</a><span class="k">def</span> <span class="nf">get_cols_from_feat_markers</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">features_markers</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    List columns with a specific marker</span>
-<span class="sd">    :param df: Dataframe whose columns needs to be filtered</span>
-<span class="sd">    :param features_markers: List of markers (&#39;strings&#39;) to be used for extraction</span>
-<span class="sd">    :return: List of columns containing at least one of the markers</span>
+<span class="sd">    |  :param df: Dataframe whose columns needs to be filtered</span>
+<span class="sd">    |  :param features_markers: List of markers (&#39;strings&#39;) to be used for extraction</span>
+<span class="sd">    |  :return:  List of columns containing at least one of the markers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cols_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">marker</span> <span class="ow">in</span> <span class="n">features_markers</span><span class="p">:</span>
         <span class="n">cols_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="p">(</span><span class="n">marker</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)])</span>
+    <span class="n">cols_list_unique</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="nb">set</span><span class="p">(</span><span class="n">cols_list</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">cols_list_unique</span></div>
 
-    <span class="k">return</span> <span class="n">cols_list</span></div>
+
+<div class="viewcode-block" id="run_stat_test"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.run_stat_test">[docs]</a><span class="k">def</span> <span class="nf">run_stat_test</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">stat_test_dict</span><span class="p">,</span> <span class="n">test_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs t-test for each cat of cell.</span>
+<span class="sd">    |  :param df: Data to test</span>
+<span class="sd">    |  :param t_test_dict: parameters</span>
+<span class="sd">    |  :return:  Dataframe with t test for each selected feature</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">features_markers</span> <span class="o">=</span> <span class="n">stat_test_dict</span><span class="p">[</span><span class="s2">&quot;features_markers&quot;</span><span class="p">]</span>
+    <span class="n">aggregation_level</span> <span class="o">=</span> <span class="n">stat_test_dict</span><span class="p">[</span><span class="s2">&quot;aggregartion_level&quot;</span><span class="p">]</span>
+
+    <span class="n">cells_to_drop</span> <span class="o">=</span> <span class="n">stat_test_dict</span><span class="p">[</span><span class="s2">&quot;cells_to_drop&quot;</span><span class="p">]</span>
+    <span class="n">cellType_col</span> <span class="o">=</span> <span class="n">stat_test_dict</span><span class="p">[</span><span class="s2">&quot;cellType_col&quot;</span><span class="p">]</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="n">cellType_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cells_to_drop</span><span class="p">)]</span>
+
+    <span class="n">cols_to_test</span> <span class="o">=</span> <span class="n">get_cols_from_feat_markers</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">features_markers</span><span class="p">)</span>
+
+    <span class="n">df_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols_to_test</span><span class="p">:</span>
+        <span class="n">dict_test</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">celltype</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">cellType</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+            <span class="n">celltype_array</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">aggregation_level</span><span class="p">]</span> <span class="o">==</span> <span class="n">celltype</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">other_array</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">aggregation_level</span><span class="p">]</span> <span class="o">!=</span> <span class="n">celltype</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">test_type</span> <span class="o">==</span> <span class="s2">&quot;t_test&quot;</span><span class="p">:</span>
+                <span class="n">stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span>
+                    <span class="n">other_array</span><span class="p">,</span> <span class="n">celltype_array</span><span class="p">,</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s2">&quot;omit&quot;</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+            <span class="k">if</span> <span class="n">test_type</span> <span class="o">==</span> <span class="s2">&quot;mann_whitney&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">celltype_array</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">celltype_array</span><span class="p">):</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">celltype_array</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+                <span class="k">else</span><span class="p">:</span>
+
+                    <span class="n">stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">mannwhitneyu</span><span class="p">(</span>
+                        <span class="n">other_array</span><span class="p">,</span> <span class="n">celltype_array</span><span class="p">,</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s2">&quot;omit&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="n">dict_test</span><span class="p">[</span><span class="n">celltype</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="n">temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">dict_test</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+        <span class="n">temp_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="n">df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">)</span>
+    <span class="n">stat_significance_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">stat_significance_df</span><span class="p">[</span><span class="n">cellType_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">dict_test</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">stat_significance_df</span></div>
+
+
+<div class="viewcode-block" id="plot_stat_test"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.plot_stat_test">[docs]</a><span class="k">def</span> <span class="nf">plot_stat_test</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">t_test_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    plot the heatmap of the statistical tests</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param t_test_dict:</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">features_markers</span> <span class="o">=</span> <span class="n">t_test_dict</span><span class="p">[</span><span class="s2">&quot;features_markers&quot;</span><span class="p">]</span>
+    <span class="n">report_save_path</span> <span class="o">=</span> <span class="n">t_test_dict</span><span class="p">[</span><span class="s2">&quot;report_save_path&quot;</span><span class="p">]</span>
+    <span class="n">report_save_path</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span><span class="n">report_save_path</span><span class="p">)</span>
+
+    <span class="n">graph_folder</span> <span class="o">=</span> <span class="n">t_test_dict</span><span class="p">[</span><span class="s2">&quot;graph_folder&quot;</span><span class="p">]</span>
+    <span class="n">t_test_report_name</span> <span class="o">=</span> <span class="n">t_test_dict</span><span class="p">[</span><span class="s2">&quot;t_test_report_name&quot;</span><span class="p">]</span>
+
+    <span class="n">files_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">marker</span> <span class="ow">in</span> <span class="n">features_markers</span><span class="p">:</span>
+        <span class="n">sub_group</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="p">(</span><span class="n">marker</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)]</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">sub_group</span><span class="p">])</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">report_save_path</span><span class="si">}</span><span class="s2">\</span><span class="si">{</span><span class="n">graph_folder</span><span class="si">}</span><span class="s2">\</span><span class="si">{</span><span class="n">marker</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">files_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="n">utils</span><span class="o">.</span><span class="n">merge_pdfs</span><span class="p">(</span>
+        <span class="n">files_list</span><span class="p">,</span> <span class="n">writing_path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">report_save_path</span><span class="si">}</span><span class="s2">\</span><span class="si">{</span><span class="n">t_test_report_name</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_statistical_analysis"><a class="viewcode-back" href="../../../../bbp_code_package.nodes.statistical_analysis.html#bbp_code_package.nodes.statistical_analysis.statistical_analysis_utils.get_statistical_analysis">[docs]</a><span class="k">def</span> <span class="nf">get_statistical_analysis</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">stat_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    synthetize the results of the statistical tests</span>
+<span class="sd">    |  :param df: dataframe to be processed</span>
+<span class="sd">    |  :param stat_dict:</span>
+<span class="sd">    |  :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">non_feat_cols</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;non_feat_cols&quot;</span><span class="p">]</span>
+    <span class="n">p_min</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;p_min&quot;</span><span class="p">]</span>
+    <span class="n">p_max</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;p_max&quot;</span><span class="p">]</span>
+    <span class="n">filler_value</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;filler_value&quot;</span><span class="p">]</span>
+    <span class="n">class_features</span> <span class="o">=</span> <span class="n">stat_dict</span><span class="p">[</span><span class="s2">&quot;class_features&quot;</span><span class="p">]</span>
+
+    <span class="n">concat_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">test_type</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">test_type</span> <span class="o">==</span> <span class="n">test</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">df_test</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">non_feat_cols</span><span class="p">)]:</span>
+            <span class="n">df_feature</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[[</span><span class="n">feature</span><span class="p">,</span> <span class="n">class_features</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">df_feature</span> <span class="o">=</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">df_feature</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">==</span> <span class="n">filler_value</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">non_sign_list</span> <span class="o">=</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_feature</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p_min</span><span class="p">][</span>
+                    <span class="n">class_features</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="n">sign_list</span> <span class="o">=</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_feature</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p_max</span><span class="p">][</span>
+                    <span class="n">class_features</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="n">non_sign_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">df_feature</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p_min</span><span class="p">)</span>
+                <span class="n">sign_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">df_feature</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p_max</span><span class="p">)</span>
+                <span class="n">non_sign_share</span> <span class="o">=</span> <span class="n">non_sign_count</span> <span class="o">/</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">sign_share</span> <span class="o">=</span> <span class="n">sign_count</span> <span class="o">/</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">n_largest</span> <span class="o">=</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+                <span class="n">n_smallest</span> <span class="o">=</span> <span class="n">df_feature</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+
+                <span class="n">feat_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;non_sign_count&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">non_sign_count</span><span class="p">],</span>
+                        <span class="s2">&quot;sign_count&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">sign_count</span><span class="p">],</span>
+                        <span class="s2">&quot;non_sign_share&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">non_sign_share</span><span class="p">],</span>
+                        <span class="s2">&quot;sign_share&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">sign_share</span><span class="p">],</span>
+                        <span class="s2">&quot;n_largest&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">n_largest</span><span class="p">],</span>
+                        <span class="s2">&quot;n_smallest&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">n_smallest</span><span class="p">],</span>
+                        <span class="s2">&quot;feature&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">feature</span><span class="p">],</span>
+                        <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">test</span><span class="p">],</span>
+                        <span class="s2">&quot;non_sign_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">non_sign_list</span><span class="p">],</span>
+                        <span class="s2">&quot;sign_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">sign_list</span><span class="p">],</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+                <span class="n">concat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat_df</span><span class="p">)</span>
+
+    <span class="n">statistical_report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">concat_list</span><span class="p">)</span>
+    <span class="n">statistical_report_pivoted</span> <span class="o">=</span> <span class="n">statistical_report</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
+        <span class="n">index</span><span class="o">=</span><span class="s2">&quot;feature&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;test&quot;</span>
+    <span class="p">)</span>
+    <span class="n">statistical_report_pivoted</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">_r</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">statistical_report_pivoted</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">statistical_report_pivoted</span></div>
 </pre></div>
 
            </div>

@@ -4,7 +4,7 @@
 def return_processed_cell_202_1():
     """
 
-    :return: features to be tested for the cell 202_1. Data can be
+    |  :return:  features to be tested for the cell 202_1. Data can be
     cross checked in dedicated notebooks
     """
     cell_dict = {

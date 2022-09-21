@@ -6,7 +6,13 @@ import pandas as pd
 import plotly.express as px
 
 # Data from U.S. Congress, Joint Economic Committee, Social Capital Project.
-df = pd.read_csv("data/05_clustering/clustering_output.csv")
+df = pd.read_csv("data/05_clustering/clustering_output_unsc.csv")
+cluster_cols = [t for t in df if "cluster" in t]
+
+for col in cluster_cols:
+    df[col] = df[col].apply(lambda x: str(x))
+
+
 app = dash.Dash(__name__)
 
 # ------------------------------------------------------------------------
@@ -20,7 +26,6 @@ app.layout = html.Div(
         html.H1(
             "Box or Scatter plot of neuron features", style={"textAlign": "center"}
         ),
-        html.Button("Run cluster", id="run_button"),
         dcc.Dropdown(
             id="box_vs_scatter",
             options=["box plot", "scatterplot"],
@@ -28,8 +33,9 @@ app.layout = html.Div(
         ),
         dcc.Dropdown(
             id="color_dropdown",
-            options=["cluster"],
-            value="cluster",
+            options=["species", "cell_group_type", "cell_group_in_pc", "cellType"]
+            + cluster_cols,
+            value="cellType",
         ),
         dcc.Dropdown(
             id="x_feature",
@@ -42,8 +48,8 @@ app.layout = html.Div(
             value="apwaveform_AP_mean_stim_180",
         ),
         dcc.Checklist(
-            options=[1, 2, 3, 4, 5, 6, 7, 8, 0],
-            value=[1, 2, 3, 4, 5, 6, 7, 8, 0],
+            options=["FS", "DA_type", "IN", "PC", "Others", "Amygdala"],
+            value=["FS", "IN", "PC", "Others", "Amygdala"],
             id="filter",
         ),
         dcc.Graph(id="my-chart", figure={}),
@@ -62,7 +68,7 @@ app.layout = html.Div(
     Input(component_id="filter", component_property="value"),
 )
 def update_graph(box_vs_scatter, x_feature, y_feature, color, filter):
-    df_input = df.loc[df["cluster"].isin(filter)]
+    df_input = df.loc[df["cell_group_in_pc"].isin(filter)]
     if box_vs_scatter == "box plot":
 
         fig = px.box(
@@ -70,19 +76,18 @@ def update_graph(box_vs_scatter, x_feature, y_feature, color, filter):
             x=color,
             y=x_feature,
             color=color,
-            hover_name="cluster",
+            hover_name="id",
             points="all",
         )
         return False, fig
 
     if box_vs_scatter == "scatterplot":
-        df_input[color] = df_input[color].astype(str)
         fig = px.scatter(
             df_input,
             x=x_feature,
             y=y_feature,
             color=color,
-            hover_name="cluster"
+            hover_name="id"
             #            scrollZoom = True,
         )
 

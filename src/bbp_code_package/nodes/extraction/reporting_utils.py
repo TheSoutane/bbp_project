@@ -9,6 +9,12 @@ import bbp_code_package.nodes.utils as utils
 
 
 def get_report_02_intermediate(df: pd.DataFrame, parameters: Dict[str, Any]):
+    """
+    |  Orchestrate the creation of the intermediary report
+    |  :param df: dataframe to be processed
+    |  :param parameters: dict of pipeline parameters
+    |  :return: dataframe with outlier cells
+    """
     report_parameters = parameters["reports"]["report_02_intermediate"]
     outliers_df = get_numerical_data_report(df, report_parameters)
 
@@ -16,6 +22,12 @@ def get_report_02_intermediate(df: pd.DataFrame, parameters: Dict[str, Any]):
 
 
 def get_report_03_primary(df: pd.DataFrame, parameters: Dict[str, Any]):
+    """
+    |  Orchestrates the creation of the primary report
+    |  :param df: dataframe to be processed
+    |  :param parameters: dict of pipeline parameters
+    |  :return: dataframe with outlier cells
+    """
     # report_parameters = parameters["reports"]["report_03_primary"]
     # outliers_df = get_numerical_data_report(df, report_parameters)
 
@@ -24,8 +36,13 @@ def get_report_03_primary(df: pd.DataFrame, parameters: Dict[str, Any]):
     return outliers_df
 
 
-def get_raw_data_anaysis(df, parameters):
-
+def get_raw_data_anaysis(df: pd.DataFrame, parameters: Dict[str, Any]):
+    """
+    |  Orchestrate the creation of the HTML files
+    |  :param df: dataframe to be processed
+    |  :param parameters: dict of pipeline parameters
+    |  :return: none, saves the data analysis in the savepath
+    """
     # same stimulation
     stim_groups_dict = parameters["analysis"]["stim_groups_dict"]
     group_col_name_type = parameters["columns"]["group_col_name_type"]
@@ -34,6 +51,7 @@ def get_raw_data_anaysis(df, parameters):
     savefile_type = parameters["analysis"]["savefile_type"]
     savefile_in_pc = parameters["analysis"]["savefile_in_pc"]
     savepath = parameters["analysis"]["savepath"]
+    savepath = utils.get_path(savepath)
 
     get_html_scattermatrix_from_dict(
         df, stim_groups_dict, group_col_name_type, savepath, savefile_type
@@ -47,17 +65,18 @@ def get_html_scattermatrix_from_dict(
     df: pd.DataFrame, groups_dict, colour_col: str, savepath: str, savefile: str
 ):
     """
-    Plot scattermatrix HTML file over defined dict
-    :param df:
-    :param groups_dict:
-    :param colour_col:
-    :return:
+    |  Plot scattermatrix HTML file over defined dict
+    |  :param df: dataframe to be processed
+    |  :param groups_dict:
+    |  :param colour_col:
+    |  :return: None, saves the HTML files in the savepath
     """
     for protocol in groups_dict.keys():
         stim_numbers = groups_dict[protocol]
         protocol_cols = [x for x in df.columns if (protocol in x)]
 
         for number in stim_numbers:
+
             filename = f"{savefile}\{savefile}_{protocol}_{number}.html"
 
             cols = [x for x in protocol_cols if (str(number) in x)]
@@ -71,22 +90,31 @@ def get_html_scattermatrix_from_dict(
 
 def get_numerical_columns(df: pd.DataFrame):
     """
-    returns numerical columns of a dataframe
-    :param df: dataframe to analyse
-    :return: list of numerical columns
+    |  Returns numerical columns of a dataframe
+    |  :param df: dataframe to be processed dataframe to analyse
+    |  :return: list of numerical columns
     """
     numerics = ["int16", "int32", "int64", "float16", "float32", "float64"]
 
     return df.select_dtypes(include=numerics).columns.tolist()
 
 
-def get_numerical_data_report(df, report_parameters: Dict[str, Any]):
-
+def get_numerical_data_report(df: pd.DataFrame, report_parameters: Dict[str, Any]):
+    """
+    |  Orchestrates the creation of the data report
+    |  :param df: dataframe to be processed
+    |  :param report_parameters:
+    |  :return: df containing outliers
+    """
     numerical_columns_list = get_numerical_columns(df)
     file_list = []
 
     file_writing_path = report_parameters["file_writing_path"]
+    file_writing_path = utils.get_path(file_writing_path)
+
     report_writing_path = report_parameters["report_writing_path"]
+    report_writing_path = utils.get_path(report_writing_path)
+
     report_dict = {}
     outliers_df = pd.DataFrame()
 
@@ -114,9 +142,14 @@ def get_features_statistics(
 ):
     """
 
-    :param df:
-    :param col:
-    :return:
+    |  :param df: dataframe to be processed
+    |  :param col: column to get the statistic
+    |  :param report_parameters: Reporting parameters subdict
+    |  :return:
+    |  median: feature distibution median
+    |  treshold_max: feature distibution min treshold
+    |  treshold_min: feature distibution max treshold
+    |  out_of_tresh_ids: list of features outside of the treshold
     """
 
     treshold_mult = report_parameters["treshold_mult"]
@@ -139,6 +172,16 @@ def get_feature_plot(
     treshold_max: float,
     filename: str,
 ):
+    """
+    |  Create the "features plot" showing the distribution of each features
+    |  :param df: dataframe to be processed
+    |  :param col: col to plot
+    |  :param median: feature median
+    |  :param treshold_min: feature treshold_min
+    |  :param treshold_max: feature treshold_max
+    |  :param filename:
+    |  :return: None, save files to the savepath
+    """
 
     plt.figure()
     plt.hist(df[col], 30)
@@ -169,6 +212,15 @@ def get_outliers_df(
     treshold_min: float,
     treshold_max: float,
 ):
+    """
+    Create the "outliers df" that will be used to plot the reporting files
+    |  :param df: dataframe to be processed
+    |  :param col: column to analyse
+    |  :param median: feature distribution median
+    |  :param treshold_min: feature min threshold
+    |  :param treshold_max: feature max threshold
+    |  :return: df containing outliers cells
+    """
 
     df_outliers = df.loc[(df[col] < treshold_min) | (df[col] > treshold_max)][
         [col, "id"]
