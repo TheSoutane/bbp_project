@@ -1,0 +1,5 @@
+integrate files with wrong format
+implement more tests
+Discuss modelling approach
+remove ISI/freq features for stimulus below 100 (at least 1 spike) or investigate
+cap tau value to 1000 and ignore it in mean/std if too high

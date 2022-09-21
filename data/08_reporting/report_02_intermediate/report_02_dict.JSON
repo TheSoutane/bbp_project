@@ -1,0 +1,442 @@
+{
+  "apwaveform_stim_start": [],
+  "apwaveform_stim_end": [],
+  "apwaveform_AP_mean_stim_100": [],
+  "apwaveform_AP_mean_stim_140": [],
+  "apwaveform_AP_mean_stim_180": [],
+  "apwaveform_AP_mean_stim_220": [],
+  "apwaveform_AP_stdev_stim_100": [],
+  "apwaveform_AP_stdev_stim_140": [],
+  "apwaveform_AP_stdev_stim_180": [],
+  "apwaveform_AP_stdev_stim_220": [],
+  "apwaveform_first_AP_voltage_stim_100": [],
+  "apwaveform_first_AP_voltage_stim_140": [],
+  "apwaveform_first_AP_voltage_stim_180": [
+    "294_1",
+    "608_1",
+    "621_1"
+  ],
+  "apwaveform_first_AP_voltage_stim_220": [
+    "279_1"
+  ],
+  "apwaveform_first_ISI_stim_100": [
+    "472_1",
+    "538_1",
+    "539_1",
+    "551_1",
+    "594_1",
+    "595_1",
+    "726_1"
+  ],
+  "apwaveform_first_ISI_stim_140": [],
+  "apwaveform_first_ISI_stim_180": [],
+  "apwaveform_first_ISI_stim_220": [],
+  "apwaveform_first_fall_tau_stim_100": [
+    "109_2",
+    "217_2",
+    "322_1"
+  ],
+  "apwaveform_first_fall_tau_stim_140": [
+    "109_2",
+    "313_1",
+    "555_2",
+    "571_2"
+  ],
+  "apwaveform_first_fall_tau_stim_180": [
+    "224_1"
+  ],
+  "apwaveform_first_fall_tau_stim_220": [
+    "313_1",
+    "322_1"
+  ],
+  "apwaveform_peak_frequency_stim_60": [
+    "115_2",
+    "458_1"
+  ],
+  "apwaveform_peak_frequency_stim_100": [
+    "54_1",
+    "219_1"
+  ],
+  "apwaveform_peak_frequency_stim_140": [
+    "54_1",
+    "63_1"
+  ],
+  "apwaveform_peak_frequency_stim_180": [
+    "63_1"
+  ],
+  "apwaveform_peak_frequency_stim_220": [],
+  "apwaveform_second_AP_voltage_stim_100": [
+    "206_1"
+  ],
+  "apwaveform_second_AP_voltage_stim_140": [],
+  "apwaveform_second_AP_voltage_stim_180": [],
+  "apwaveform_second_AP_voltage_stim_220": [],
+  "apwaveform_second_ISI_stim_100": [
+    "241_1",
+    "246_1",
+    "444_1"
+  ],
+  "apwaveform_second_ISI_stim_140": [
+    "222_1",
+    "547_1",
+    "566_1"
+  ],
+  "apwaveform_second_ISI_stim_180": [],
+  "apwaveform_second_ISI_stim_220": [
+    "546_1"
+  ],
+  "apwaveform_second_fall_tau_stim_100": [
+    "245_1",
+    "246_1",
+    "328_1",
+    "444_1",
+    "457_1",
+    "595_1"
+  ],
+  "apwaveform_second_fall_tau_stim_140": [
+    "117_1",
+    "217_2"
+  ],
+  "apwaveform_second_fall_tau_stim_180": [
+    "555_2"
+  ],
+  "apwaveform_second_fall_tau_stim_220": [
+    "358_1",
+    "370_1",
+    "418_1",
+    "571_2",
+    "780_1"
+  ],
+  "apwaveform_spikecount_stim_60": [
+    "431_1",
+    "458_1"
+  ],
+  "apwaveform_spikecount_stim_100": [
+    "54_1",
+    "107_2",
+    "115_2",
+    "219_1"
+  ],
+  "apwaveform_spikecount_stim_140": [],
+  "apwaveform_spikecount_stim_180": [],
+  "apwaveform_spikecount_stim_220": [],
+  "apwaveform_stim_lenght_stim_60": [],
+  "apwaveform_stim_lenght_stim_100": [],
+  "apwaveform_stim_lenght_stim_140": [],
+  "apwaveform_stim_lenght_stim_180": [],
+  "apwaveform_stim_lenght_stim_220": [],
+  "apwaveform_tau_mean_stim_100": [
+    "109_2",
+    "217_2",
+    "322_1"
+  ],
+  "apwaveform_tau_mean_stim_140": [
+    "109_2",
+    "117_1",
+    "217_2",
+    "313_1",
+    "555_2",
+    "571_2"
+  ],
+  "apwaveform_tau_mean_stim_180": [
+    "224_1",
+    "555_2"
+  ],
+  "apwaveform_tau_mean_stim_220": [
+    "313_1",
+    "322_1"
+  ],
+  "apwaveform_tau_stdev_stim_100": [
+    "111_2",
+    "206_1",
+    "241_1",
+    "245_1"
+  ],
+  "apwaveform_tau_stdev_stim_140": [
+    "117_1",
+    "217_2"
+  ],
+  "apwaveform_tau_stdev_stim_180": [
+    "107_2",
+    "555_2"
+  ],
+  "apwaveform_tau_stdev_stim_220": [
+    "313_1",
+    "322_1"
+  ],
+  "apwaveform_vHold_stim_60": [],
+  "apwaveform_vHold_stim_100": [],
+  "apwaveform_vHold_stim_140": [],
+  "apwaveform_vHold_stim_180": [],
+  "apwaveform_vHold_stim_220": [],
+  "apwaveform_availability": [],
+  "idrest_stim_start": [],
+  "idrest_stim_end": [],
+  "idrest_AP_mean_stim_100": [],
+  "idrest_AP_mean_stim_125": [],
+  "idrest_AP_mean_stim_150": [],
+  "idrest_AP_mean_stim_175": [],
+  "idrest_AP_mean_stim_200": [],
+  "idrest_AP_mean_stim_225": [],
+  "idrest_AP_mean_stim_250": [],
+  "idrest_AP_mean_stim_275": [],
+  "idrest_AP_mean_stim_300": [],
+  "idrest_AP_stdev_stim_100": [],
+  "idrest_AP_stdev_stim_125": [
+    "300_2"
+  ],
+  "idrest_AP_stdev_stim_150": [
+    "300_2",
+    "347_1"
+  ],
+  "idrest_AP_stdev_stim_175": [],
+  "idrest_AP_stdev_stim_200": [
+    "300_2"
+  ],
+  "idrest_AP_stdev_stim_225": [
+    "300_2"
+  ],
+  "idrest_AP_stdev_stim_250": [],
+  "idrest_AP_stdev_stim_275": [],
+  "idrest_AP_stdev_stim_300": [
+    "266_1"
+  ],
+  "idrest_first_AP_voltage_stim_100": [],
+  "idrest_first_AP_voltage_stim_125": [],
+  "idrest_first_AP_voltage_stim_150": [],
+  "idrest_first_AP_voltage_stim_175": [],
+  "idrest_first_AP_voltage_stim_200": [],
+  "idrest_first_AP_voltage_stim_225": [],
+  "idrest_first_AP_voltage_stim_250": [],
+  "idrest_first_AP_voltage_stim_275": [],
+  "idrest_first_AP_voltage_stim_300": [],
+  "idrest_first_ISI_stim_100": [
+    "230_1",
+    "497_1",
+    "546_1"
+  ],
+  "idrest_first_ISI_stim_125": [
+    "598_1",
+    "743_1"
+  ],
+  "idrest_first_ISI_stim_150": [
+    "270_1",
+    "287_1",
+    "598_1",
+    "614_1",
+    "743_1"
+  ],
+  "idrest_first_ISI_stim_175": [
+    "605_1",
+    "609_1",
+    "614_1",
+    "619_1"
+  ],
+  "idrest_first_ISI_stim_200": [
+    "467_1",
+    "614_1",
+    "619_1",
+    "743_1",
+    "753_1"
+  ],
+  "idrest_first_ISI_stim_225": [
+    "598_1",
+    "614_1",
+    "619_1",
+    "734_1",
+    "753_1"
+  ],
+  "idrest_first_ISI_stim_250": [
+    "407_1",
+    "619_1",
+    "722_1",
+    "775_1"
+  ],
+  "idrest_first_ISI_stim_275": [
+    "609_1",
+    "750_1",
+    "772_1"
+  ],
+  "idrest_first_ISI_stim_300": [
+    "407_1",
+    "435_1",
+    "518_1",
+    "565_1",
+    "750_1",
+    "772_1"
+  ],
+  "idrest_peak_frequency_stim_50": [
+    "213_1",
+    "524_1",
+    "529_1",
+    "568_1",
+    "587_1",
+    "588_1"
+  ],
+  "idrest_peak_frequency_stim_75": [
+    "99_1",
+    "213_1",
+    "568_1",
+    "587_1",
+    "588_1"
+  ],
+  "idrest_peak_frequency_stim_100": [
+    "54_1",
+    "62_1",
+    "64_1",
+    "219_1"
+  ],
+  "idrest_peak_frequency_stim_125": [
+    "54_1",
+    "56_1",
+    "62_1",
+    "63_1"
+  ],
+  "idrest_peak_frequency_stim_150": [
+    "62_1",
+    "63_1"
+  ],
+  "idrest_peak_frequency_stim_175": [
+    "62_1",
+    "63_1"
+  ],
+  "idrest_peak_frequency_stim_200": [
+    "62_1",
+    "63_1"
+  ],
+  "idrest_peak_frequency_stim_225": [
+    "62_1"
+  ],
+  "idrest_peak_frequency_stim_250": [
+    "62_1"
+  ],
+  "idrest_peak_frequency_stim_275": [
+    "62_1"
+  ],
+  "idrest_peak_frequency_stim_300": [],
+  "idrest_second_AP_voltage_stim_100": [],
+  "idrest_second_AP_voltage_stim_125": [],
+  "idrest_second_AP_voltage_stim_150": [],
+  "idrest_second_AP_voltage_stim_175": [],
+  "idrest_second_AP_voltage_stim_200": [],
+  "idrest_second_AP_voltage_stim_225": [],
+  "idrest_second_AP_voltage_stim_250": [],
+  "idrest_second_AP_voltage_stim_275": [],
+  "idrest_second_AP_voltage_stim_300": [],
+  "idrest_second_ISI_stim_100": [
+    "410_1",
+    "555_2",
+    "583_1",
+    "595_1",
+    "618_1"
+  ],
+  "idrest_second_ISI_stim_125": [
+    "593_1",
+    "627_1"
+  ],
+  "idrest_second_ISI_stim_150": [
+    "424_1",
+    "428_1"
+  ],
+  "idrest_second_ISI_stim_175": [
+    "288_1",
+    "381_1",
+    "613_1",
+    "751_1"
+  ],
+  "idrest_second_ISI_stim_200": [
+    "435_1",
+    "613_1",
+    "783_1"
+  ],
+  "idrest_second_ISI_stim_225": [
+    "287_1",
+    "307_1",
+    "612_1",
+    "618_1"
+  ],
+  "idrest_second_ISI_stim_250": [
+    "287_1",
+    "598_1",
+    "613_1",
+    "614_1",
+    "743_1"
+  ],
+  "idrest_second_ISI_stim_275": [
+    "485_1",
+    "594_1",
+    "614_1",
+    "619_1",
+    "736_1",
+    "756_1"
+  ],
+  "idrest_second_ISI_stim_300": [
+    "78_1",
+    "287_1",
+    "425_1",
+    "430_1",
+    "485_1",
+    "621_1",
+    "721_1"
+  ],
+  "idrest_spikecount_stim_50": [
+    "213_1",
+    "568_1",
+    "571_2",
+    "587_1",
+    "588_1"
+  ],
+  "idrest_spikecount_stim_75": [
+    "213_1",
+    "568_1",
+    "582_1",
+    "587_1",
+    "588_1",
+    "590_1"
+  ],
+  "idrest_spikecount_stim_100": [
+    "62_1",
+    "219_1",
+    "588_1"
+  ],
+  "idrest_spikecount_stim_125": [],
+  "idrest_spikecount_stim_150": [],
+  "idrest_spikecount_stim_175": [],
+  "idrest_spikecount_stim_200": [],
+  "idrest_spikecount_stim_225": [],
+  "idrest_spikecount_stim_250": [],
+  "idrest_spikecount_stim_275": [],
+  "idrest_spikecount_stim_300": [],
+  "idrest_stim_lenght_stim_50": [],
+  "idrest_stim_lenght_stim_75": [],
+  "idrest_stim_lenght_stim_100": [],
+  "idrest_stim_lenght_stim_125": [],
+  "idrest_stim_lenght_stim_150": [],
+  "idrest_stim_lenght_stim_175": [],
+  "idrest_stim_lenght_stim_200": [],
+  "idrest_stim_lenght_stim_225": [],
+  "idrest_stim_lenght_stim_250": [],
+  "idrest_stim_lenght_stim_275": [],
+  "idrest_stim_lenght_stim_300": [],
+  "idrest_vHold_stim_50": [],
+  "idrest_vHold_stim_75": [],
+  "idrest_vHold_stim_100": [],
+  "idrest_vHold_stim_125": [
+    "568_1"
+  ],
+  "idrest_vHold_stim_150": [
+    "568_1"
+  ],
+  "idrest_vHold_stim_175": [
+    "568_1"
+  ],
+  "idrest_vHold_stim_200": [],
+  "idrest_vHold_stim_225": [
+    "568_1"
+  ],
+  "idrest_vHold_stim_250": [],
+  "idrest_vHold_stim_275": [],
+  "idrest_vHold_stim_300": [],
+  "idrest_availability": [],
+  "has_protocols": []
+}

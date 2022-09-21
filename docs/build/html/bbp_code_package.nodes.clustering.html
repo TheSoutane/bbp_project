@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bbp_code_package.nodes.clustering package &mdash; bbp_code_package 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\qb1-sphinx-rtd.css" type="text/css" />
+  <link rel="stylesheet" href="_static/C:\Users\romla\anaconda3\envs\bbp_env\Lib\site-packages\kedro\framework\html\_static\css\theme-overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> bbp_code_package
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">bbp_code_package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bbp_code_package.html">bbp_code_package package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bbp_code_package.nodes.html">bbp_code_package.nodes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bbp_code_package.pipelines.html">bbp_code_package.pipelines package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#module-bbp_code_package.pipeline_registry">bbp_code_package.pipeline_registry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bbp_code_package.html#module-bbp_code_package.settings">bbp_code_package.settings module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bbp_code_package</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>bbp_code_package.nodes.clustering package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="module-bbp_code_package.nodes.clustering">
+<span id="bbp-code-package-nodes-clustering-package"></span><h1>bbp_code_package.nodes.clustering package<a class="headerlink" href="#module-bbp_code_package.nodes.clustering" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-bbp_code_package.nodes.clustering.clustering_main">
+<span id="bbp-code-package-nodes-clustering-clustering-main-module"></span><h2>bbp_code_package.nodes.clustering.clustering_main module<a class="headerlink" href="#module-bbp_code_package.nodes.clustering.clustering_main" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_main.normalize_clustering_df">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_main.</code><code class="sig-name descname">normalize_clustering_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_main.html#normalize_clustering_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_main.normalize_clustering_df" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Orchestrate the preparation of the clustering input</div>
+</div>
+<div class="line-block">
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return: Normalized df</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_main.prepare_clustering_input">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_main.</code><code class="sig-name descname">prepare_clustering_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_main.html#prepare_clustering_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_main.prepare_clustering_input" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">TO BE IMPLEMENTED</div>
+<div class="line">ADD DESCRIPTIVE FEATURES REQUIRED FOR CLUSTER ANALYSIS</div>
+</div>
+<div class="line-block">
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+</div>
+<div class="line-block">
+<div class="line">Returns: Primary dataframe with descriptive features (ex one hot encoding)</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_main.run_clustering">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_main.</code><code class="sig-name descname">run_clustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_main.html#run_clustering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_main.run_clustering" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Orchestrate the data clustering</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+<div class="line">df_cluster: Input df (scaled) with cluster columns (can be used for analysis)</div>
+<div class="line">df_cluster_unsc: de-scaled df_cluster</div>
+<div class="line">centroids: centroids of the clusters</div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-bbp_code_package.nodes.clustering.clustering_utils">
+<span id="bbp-code-package-nodes-clustering-clustering-utils-module"></span><h2>bbp_code_package.nodes.clustering.clustering_utils module<a class="headerlink" href="#module-bbp_code_package.nodes.clustering.clustering_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.extract_clustering_features">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">extract_clustering_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#extract_clustering_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.extract_clustering_features" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">TBC: THIS FUNCTION MIGHT BE DEPRECATED</div>
+<div class="line">Extract the columns used for the clustering distance based on tags</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.get_cluster_analysis_output">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">get_cluster_analysis_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">df_unscaled</span></em>, <em class="sig-param"><span class="n">cuttree_df</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#get_cluster_analysis_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.get_cluster_analysis_output" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Process the outputs of the clustering algorithm to produce the files used in the analysis</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param df_unscaled:</div>
+<div class="line">:param cuttree_df: Clustering output. It contains the clustering tree obtained after the use of</div>
+<div class="line">agglomerative clustering</div>
+<div class="line">:return:</div>
+<div class="line">df_cluster_all: Df with all clustering outputs (multiple number of clusters)</div>
+<div class="line">df_cluster_unsc_all: de-scaled df_cluster_all</div>
+<div class="line">pd.concat(cluster_output_list).transpose(): clustering output</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.get_features_from_markers">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">get_features_from_markers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#get_features_from_markers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.get_features_from_markers" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Collect all feature with a specific tag in it</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.get_normalization_per_group">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">get_normalization_per_group</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">normalization_per_group_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#get_normalization_per_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.get_normalization_per_group" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Runs distance normalisation. Why ?</div>
+<div class="line">We normalize “clustering groups” in order to balance clustering.</div>
+<div class="line">Dummy example: We want the APWaveform <a href="#id1"><span class="problematic" id="id2">AP_</span></a> style features (3 different feats) to have the same importance as the</div>
+<div class="line">vHold. Therefore, The NORMALIZED AP features are divided by 3 so the total importance of the AP feats equal the</div>
+<div class="line">one of vHold</div>
+</div>
+<div class="line-block">
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param normalization_per_group_dict:</div>
+<div class="line">:return: df with scaled columns (see descr for explanation)</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.get_normalization_per_group_dict">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">get_normalization_per_group_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cols_to_cluster</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#get_normalization_per_group_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.get_normalization_per_group_dict" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Aggregate features in a dict for distance normalisation</div>
+<div class="line"><br /></div>
+<div class="line">Why ?</div>
+<div class="line">We normalize “clustering groups” in order to balance clustering.</div>
+<div class="line">Dummy example: We want the APWaveform <a href="#id3"><span class="problematic" id="id4">AP_</span></a> style features (3 different feats) to have the same importance as the</div>
+<div class="line">vHold. Therefore, The NORMALIZED AP features are divided by 3 so the total importance of the AP feats equal the</div>
+<div class="line">one of vHold</div>
+<div class="line">:param cols_to_cluster:</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return: dict with features types as entry and features list as output. This will be used to scale</div>
+<div class="line">the clustering distance</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.load_scaler">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">load_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#load_scaler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.load_scaler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.one_hot_encoding_input">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">one_hot_encoding_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#one_hot_encoding_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.one_hot_encoding_input" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">One Hot encode descriptive columns for cluster analysis</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.plot_elbow_aggl_clustering">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">plot_elbow_aggl_clustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">agglomerative_output</span></em>, <em class="sig-param"><span class="n">fig_savepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#plot_elbow_aggl_clustering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.plot_elbow_aggl_clustering" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Plot the intra noise cluster to see the elbow plot and define the number of clusters to select during the analysis</div>
+<div class="line">:param agglomerative_output:</div>
+<div class="line">:param fig_savepath:</div>
+<div class="line">:return: None, save elbow plot in the savepath</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.run_agglomerative_clustering">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">run_agglomerative_clustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_scaled</span></em>, <em class="sig-param"><span class="n">n_clusters_list</span></em>, <em class="sig-param"><span class="n">fig_savepath</span></em>, <em class="sig-param"><span class="n">agg_method</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#run_agglomerative_clustering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.run_agglomerative_clustering" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Orchestrates the processing of agglomerative clustering
+|  :param df_scaled:
+|  :param n_clusters_list: number of clusters to be analysed
+|  :param fig_savepath: Where to save the figures
+|  :param agg_method: Agglomeration method
+|  :return: List of cluster attributions of input dataframe</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.save_scaler">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">save_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scaler</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#save_scaler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.save_scaler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.scale_data">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">scale_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">cols_to_cluster</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#scale_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.scale_data" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Scale input data using a standartscaler (more adapted for clustering)</div>
+<div class="line">:param df: dataframe to be processed</div>
+<div class="line">:param cols_to_cluster:</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bbp_code_package.nodes.clustering.clustering_utils.unscale_df">
+<code class="sig-prename descclassname">bbp_code_package.nodes.clustering.clustering_utils.</code><code class="sig-name descname">unscale_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scaled_df</span></em>, <em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bbp_code_package/nodes/clustering/clustering_utils.html#unscale_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bbp_code_package.nodes.clustering.clustering_utils.unscale_df" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">Descale DF for the cluster analysis</div>
+<div class="line">:param scaled_df:</div>
+<div class="line">:param parameters: dict of pipeline parameters</div>
+<div class="line">:return:</div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
